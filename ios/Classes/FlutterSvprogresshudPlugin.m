@@ -22,10 +22,16 @@
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     float progress = [call.arguments[@"progress"] floatValue];
-    NSString *status = call.arguments[@"status" ];
+    NSString *status = call.arguments[@"status"];
     NSInteger delay = [call.arguments[@"delay"] integerValue];
-    
-    if ([@"show" isEqualToString:call.method]) {
+
+    if ([@"setDefaultStyle" isEqualToString:call.method]) {
+        NSString *style = call.arguments[@"style"];
+        [self setDefaultStyle:style];
+    } else if ([@"setDefaultMaskType" isEqualToString:call.method]) {
+        NSString *maskType = call.arguments[@"maskType"];
+        [self setDefaultMaskType:maskType];
+    } else if ([@"show" isEqualToString:call.method]) {
         [self show:status];
     } else if ([@"showInfo" isEqualToString:call.method]) {
         [self showInfo:status];
@@ -45,6 +51,28 @@
     }
 
     result([NSNumber numberWithBool:YES]);
+}
+
+- (void)setDefaultStyle:(NSString *)style
+{
+    if ([@"dark" isEqualToString:style]) {
+        [SVProgressHUD setDefaultStyle: SVProgressHUDStyleDark];
+    } else {
+        [SVProgressHUD setDefaultStyle: SVProgressHUDStyleLight];
+    }
+}
+
+- (void)setDefaultMaskType:(NSString *)maskType
+{
+    if ([@"none" isEqualToString:maskType]) {
+        [SVProgressHUD setDefaultMaskType: SVProgressHUDMaskTypeNone];
+    } else if ([@"clear" isEqualToString:maskType]) {
+        [SVProgressHUD setDefaultMaskType: SVProgressHUDMaskTypeClear];
+    } else if ([@"black" isEqualToString:maskType]) {
+        [SVProgressHUD setDefaultMaskType: SVProgressHUDMaskTypeBlack];
+    } else if ([@"gradient" isEqualToString:maskType]) {
+        [SVProgressHUD setDefaultMaskType: SVProgressHUDMaskTypeGradient];
+    }
 }
 
 - (void)show:(NSString *)status

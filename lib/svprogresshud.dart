@@ -1,10 +1,27 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 
 class SVProgressHUD {
   static const MethodChannel _channel =
       const MethodChannel('flutter_svprogresshud');
+
+  static Future<bool> setDefaultStyle(String style) async {
+    if (!Platform.isIOS) return false;
+
+    return await _channel.invokeMethod('setDefaultStyle', {
+      'style': style,
+    });
+  }
+
+  static Future<bool> setDefaultMaskType(String maskType) async {
+    if (!Platform.isIOS) return false;
+
+    return await _channel.invokeMethod('setDefaultMaskType', {
+      'maskType': maskType,
+    });
+  }
 
   static Future<bool> show(String status) async {
     return await _channel.invokeMethod('show', {
