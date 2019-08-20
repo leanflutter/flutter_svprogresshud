@@ -48,7 +48,7 @@ class SVProgressHUD {
   }
 
   static Future<bool> showProgress(num  progress, String status) async {
-    return await _channel.invokeMethod('showError', {
+    return await _channel.invokeMethod('showProgress', {
       'progress': progress,
       'status': status,
     });

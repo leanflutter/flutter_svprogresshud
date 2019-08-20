@@ -35,7 +35,7 @@ public class FlutterSvprogresshudPlugin implements MethodCallHandler {
 
     @Override
     public void onMethodCall(MethodCall call, Result result) {
-        float progress = 0;
+        double progress = 0;
         String status = null;
         int delay = 0;
 
@@ -107,7 +107,7 @@ public class FlutterSvprogresshudPlugin implements MethodCallHandler {
         hud.show();
     }
 
-    public void showProgress(Float progress, String status) {
+    public void showProgress(Double progress, String status) {
         if (hud == null) {
             hud = KProgressHUD.create(currentActivity)
                     .setStyle(KProgressHUD.Style.BAR_DETERMINATE)
