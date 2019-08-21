@@ -13,7 +13,7 @@ Add this to your package's pubspec.yaml file:
 
 ```yaml
 dependencies:
-  flutter_svprogresshud: ^0.0.1
+  flutter_svprogresshud: ^0.0.2
 ```
 
 You can install packages from the command line:
