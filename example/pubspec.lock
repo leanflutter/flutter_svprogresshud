@@ -76,6 +76,13 @@ packages:
       relative: true
     source: path
     version: "0.0.2"
+  flutter_svprogresshud_fde:
+    dependency: "direct dev"
+    description:
+      path: "../../flutter_svprogresshud_fde"
+      relative: true
+    source: path
+    version: "0.0.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter

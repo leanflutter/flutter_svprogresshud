@@ -19,6 +19,8 @@ dev_dependencies:
 
   flutter_svprogresshud:
     path: ../
+  flutter_svprogresshud_fde:
+    path: ../../flutter_svprogresshud_fde
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
