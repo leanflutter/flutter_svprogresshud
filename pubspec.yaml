@@ -27,6 +27,9 @@ flutter:
   plugin:
     androidPackage: org.blankapp.flutterplugins.flutter_svprogresshud
     pluginClass: FlutterSvprogresshudPlugin
+    # platforms:
+    #   macos:
+    #     pluginClass: FlutterSvprogresshudPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

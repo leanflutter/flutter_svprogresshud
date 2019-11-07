@@ -37,12 +37,6 @@ SVProgressHUD.dismissWithDelay(1500);
 - https://github.com/SVProgressHUD/SVProgressHUD
 - https://github.com/Kaopiz/KProgressHUD
 
-## 探讨
-
-如果您对此项目有任何建议或疑问，可以通过 [Telegram Group](https://t.me/flutterdebugger) 或我的微信进行讨论。
-
-![](http://blankapp.org/assets/images/wechat_qrcode.png)
-
 ## 许可证
 
 ```

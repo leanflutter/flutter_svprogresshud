@@ -49,13 +49,13 @@ class SVProgressHUD {
 
   static Future<bool> showProgress(num  progress, String status) async {
     return await _channel.invokeMethod('showProgress', {
-      'progress': progress,
+      'progress': progress.toDouble(),
       'status': status,
     });
   }
 
   static Future<bool> dismiss() async {
-    return await _channel.invokeMethod('dismiss');
+    return await _channel.invokeMethod('dismiss', {});
   }
 
   static Future<bool> dismissWithDelay(int delay) async {
