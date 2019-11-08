@@ -43,7 +43,11 @@ public class FlutterSvprogresshudPlugin implements MethodCallHandler {
         if (call.hasArgument("status")) status = call.argument("status");
         if (call.hasArgument("delay")) delay = call.argument("delay");
 
-        if (call.method.equals("show")) {
+        if (call.method.equals("setDefaultStyle")) {
+          // No-op
+        } else if (call.method.equals("setDefaultMaskType")) {
+          // No-op
+        } else if (call.method.equals("show")) {
             this.show(status);
         } else if (call.method.equals("showInfo")) {
             this.showInfo(status);

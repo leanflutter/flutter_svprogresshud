@@ -14,7 +14,7 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/flutter/darwin-x64
 
 SPEC CHECKSUMS:
-  flutter_svprogresshud_fde: d3ef899af63ad6f26ba94fd2eea70bed80a59e34
+  flutter_svprogresshud_fde: efd2788777c7b8071cdf4c570d235ef9db9bb363
   FlutterMacOS: 15bea8a44d2fa024068daa0140371c020b4b6ff9
 
 PODFILE CHECKSUM: d8ba9b3e9e93c62c74a660b46c6fcb09f03991a7

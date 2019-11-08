@@ -30,10 +30,6 @@ void _setTargetPlatformForDesktop() {
 void main() {
   _setTargetPlatformForDesktop();
 
-  // SVProgressHUD.dismiss();
-  // SVProgressHUD.setDefaultStyle("light");
-  // SVProgressHUD.setDefaultMaskType("none");
-
   runApp(MyApp());
 }
 
@@ -44,6 +40,14 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
+  void initState() {
+    SVProgressHUD.dismiss();
+    SVProgressHUD.setDefaultStyle("light");
+    SVProgressHUD.setDefaultMaskType("none");
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
@@ -53,7 +57,7 @@ class _MyAppState extends State<MyApp> {
         body: Column(
           children: <Widget>[
             ListTile(
-              title: Text('show'),
+              title: Text('showProgress'),
               onTap: () {
                 int progress = 1;
                 Timer.periodic(const Duration(milliseconds: 100), (timer) {
@@ -66,6 +70,12 @@ class _MyAppState extends State<MyApp> {
                   }
                   SVProgressHUD.showProgress((progress), "Loading...");
                 });
+              },
+            ),
+            ListTile(
+              title: Text('dismiss'),
+              onTap: () {
+                SVProgressHUD.dismiss();
               },
             )
           ],
