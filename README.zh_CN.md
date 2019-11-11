@@ -1,7 +1,12 @@
 # flutter_svprogresshud
 
-[![pub package](https://img.shields.io/pub/v/flutter_svprogresshud.svg)](https://pub.dartlang.org/packages/flutter_svprogresshud)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=lijy91%40live.com&currency_code=USD&source=url)
+[![pub version][pub-image]][pub-url]
+[![Join the chat][telegram-image]][telegram-url]
+
+[pub-image]: https://img.shields.io/pub/v/flutter_svprogresshud.svg
+[pub-url]: https://pub.dev/packages/flutter_svprogresshud
+[telegram-image]:https://img.shields.io/badge/chat-on%20telegram-blue.svg
+[telegram-url]: https://t.me/lijy91
 
 [English](./README.md) | 简体中文
 
@@ -13,7 +18,18 @@
 
 ```yaml
 dependencies:
-  flutter_svprogresshud: ^0.0.2
+  flutter_svprogresshud: ^0.0.3
+```
+
+要在桌面应用（only macOS）上使用 `flutter_svprogresshud`，您应包括：
+
+```diff
+dependencies:
+  flutter_svprogresshud: ^0.0.3
++  flutter_svprogresshud_fde:
++    git:
++      url: https://github.com/blankapp/flutter_svprogresshud_fde.git
++      ref: master
 ```
 
 您可以通过命令行安装软件包：
@@ -29,13 +45,14 @@ import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
 
 SVProgressHUD.show('Loading...');
 SVProgressHUD.dismissWithDelay(1500);
-
 ```
 
 ## 相关链接
 
 - https://github.com/SVProgressHUD/SVProgressHUD
 - https://github.com/Kaopiz/KProgressHUD
+- https://github.com/massimobio/ProgressHUD-Mac
+- https://github.com/blankapp/flutter_svprogresshud_fde
 
 ## 许可证
 
