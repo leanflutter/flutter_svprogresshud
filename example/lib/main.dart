@@ -57,6 +57,34 @@ class _MyAppState extends State<MyApp> {
         body: Column(
           children: <Widget>[
             ListTile(
+              title: Text('show'),
+              onTap: () {
+                SVProgressHUD.show("Loading...");
+                SVProgressHUD.dismissWithDelay(1500);
+              },
+            ),
+            ListTile(
+              title: Text('showSuccess'),
+              onTap: () {
+                SVProgressHUD.showSuccess("Success");
+                SVProgressHUD.dismissWithDelay(1500);
+              },
+            ),
+            ListTile(
+              title: Text('showInfo'),
+              onTap: () {
+                SVProgressHUD.showInfo("Info");
+                SVProgressHUD.dismissWithDelay(1500);
+              },
+            ),
+            ListTile(
+              title: Text('showError'),
+              onTap: () {
+                SVProgressHUD.showError("Error");
+                SVProgressHUD.dismissWithDelay(1500);
+              },
+            ),
+            ListTile(
               title: Text('showProgress'),
               onTap: () {
                 int progress = 1;
