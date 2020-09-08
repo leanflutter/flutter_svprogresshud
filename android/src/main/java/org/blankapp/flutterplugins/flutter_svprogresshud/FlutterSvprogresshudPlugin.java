@@ -119,6 +119,9 @@ public class FlutterSvprogresshudPlugin implements MethodCallHandler {
                     .setLabel(status);
         }
         hud.setProgress(progress.intValue());
+        if (status != null && !status.isEmpty()) {
+            hud.setLabel(status);
+        }
         if (!hud.isShowing()) {
             hud.show();
         }
