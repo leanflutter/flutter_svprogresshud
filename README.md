@@ -18,18 +18,7 @@ Add this to your package's pubspec.yaml file:
 
 ```yaml
 dependencies:
-  flutter_svprogresshud: ^0.0.3
-```
-
-to use `flutter_svprogresshud` on desktop (only macOS), you would include:
-
-```diff
-dependencies:
-  flutter_svprogresshud: ^0.0.3
-+  flutter_svprogresshud_fde:
-+    git:
-+      url: https://github.com/blankapp/flutter_svprogresshud_fde.git
-+      ref: master
+  flutter_svprogresshud: ^0.0.4
 ```
 
 You can install packages from the command line:
@@ -52,8 +41,6 @@ SVProgressHUD.dismissWithDelay(1500);
 
 - https://github.com/SVProgressHUD/SVProgressHUD
 - https://github.com/Kaopiz/KProgressHUD
-- https://github.com/massimobio/ProgressHUD-Mac
-- https://github.com/blankapp/flutter_svprogresshud_fde
 
 ## License
 

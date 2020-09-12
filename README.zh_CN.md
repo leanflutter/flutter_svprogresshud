@@ -18,18 +18,7 @@
 
 ```yaml
 dependencies:
-  flutter_svprogresshud: ^0.0.3
-```
-
-要在桌面应用（only macOS）上使用 `flutter_svprogresshud`，您应包括：
-
-```diff
-dependencies:
-  flutter_svprogresshud: ^0.0.3
-+  flutter_svprogresshud_fde:
-+    git:
-+      url: https://github.com/blankapp/flutter_svprogresshud_fde.git
-+      ref: master
+  flutter_svprogresshud: ^0.0.4
 ```
 
 您可以通过命令行安装软件包：
@@ -51,8 +40,6 @@ SVProgressHUD.dismissWithDelay(1500);
 
 - https://github.com/SVProgressHUD/SVProgressHUD
 - https://github.com/Kaopiz/KProgressHUD
-- https://github.com/massimobio/ProgressHUD-Mac
-- https://github.com/blankapp/flutter_svprogresshud_fde
 
 ## 许可证
 
