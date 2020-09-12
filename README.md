@@ -1,12 +1,9 @@
 # flutter_svprogresshud
 
 [![pub version][pub-image]][pub-url]
-[![Join the chat][telegram-image]][telegram-url]
 
 [pub-image]: https://img.shields.io/pub/v/flutter_svprogresshud.svg
 [pub-url]: https://pub.dev/packages/flutter_svprogresshud
-[telegram-image]:https://img.shields.io/badge/chat-on%20telegram-blue.svg
-[telegram-url]: https://t.me/lijy91
 
 English | [简体中文](./README.zh_CN.md)
 
@@ -34,7 +31,6 @@ import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
 
 SVProgressHUD.show('Loading...');
 SVProgressHUD.dismissWithDelay(1500);
-
 ```
 
 ## Related Links
