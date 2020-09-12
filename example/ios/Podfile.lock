@@ -3,17 +3,14 @@ PODS:
   - flutter_svprogresshud (0.0.1):
     - Flutter
     - SVProgressHUD
-  - flutter_svprogresshud_fde (0.0.1):
-    - Flutter
   - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_svprogresshud (from `.symlinks/plugins/flutter_svprogresshud/ios`)
-  - flutter_svprogresshud_fde (from `.symlinks/plugins/flutter_svprogresshud_fde/ios`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - SVProgressHUD
 
 EXTERNAL SOURCES:
@@ -21,15 +18,12 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_svprogresshud:
     :path: ".symlinks/plugins/flutter_svprogresshud/ios"
-  flutter_svprogresshud_fde:
-    :path: ".symlinks/plugins/flutter_svprogresshud_fde/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_svprogresshud: e6198730e19ba7a4b473cd09e3b5b9a1b6aae508
-  flutter_svprogresshud_fde: 29a3a94c08ac3ae5dc62b940bbc6df829ff7d66a
+  flutter_svprogresshud: b2059bda0f7edd03cf992bc98362faa7e47c431c
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 3dbe063e9c90a5d7c9e4e76e70a821b9e2c1d271
+PODFILE CHECKSUM: f32fb4e7c14f8b3ca19a369d7be425dd9241af27
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.9.1

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.blankapp.flutterplugins.flutter_svprogresshud_example">
+    package="org.leanflutter.plugins.flutter_svprogresshud_example">
     <!-- Flutter needs it to communicate with the running application
          to allow setting breakpoints, to provide hot reload, etc.
     -->

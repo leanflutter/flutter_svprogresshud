@@ -1,11 +1,12 @@
 name: flutter_svprogresshud
 description: A clean and lightweight progress HUD for flutter app.
-version: 0.0.3
+version: 0.0.4
 author: JianyingLi <lijy91@foxmail.com>
 homepage: https://github.com/blankapp/flutter_svprogresshud
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.10.0"
 
 dependencies:
   flutter:
@@ -21,17 +22,21 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   # This section identifies this Flutter project as a plugin project.
-  # The androidPackage and pluginClass identifiers should not ordinarily
+  # The 'pluginClass' and Android 'package' identifiers should not ordinarily
   # be modified. They are used by the tooling to maintain consistency when
   # adding or updating assets for this project.
   plugin:
-    androidPackage: org.blankapp.flutterplugins.flutter_svprogresshud
-    pluginClass: FlutterSvprogresshudPlugin
+    platforms:
+      android:
+        package: org.leanflutter.plugins.flutter_svprogresshud
+        pluginClass: FlutterSvprogresshudPlugin
+      ios:
+        pluginClass: FlutterSvprogresshudPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
-  #  - images/a_dot_burr.jpeg
-  #  - images/a_dot_ham.jpeg
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
   #
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages
