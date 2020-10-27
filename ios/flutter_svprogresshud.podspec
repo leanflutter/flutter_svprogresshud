@@ -11,15 +11,19 @@ A new flutter plugin project.
                        DESC
   s.homepage         = 'https://github.com/leanflutter/flutter_svprogresshud'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'JianyingLi' => 'lijy91@foxmail.com' }
+  s.author           = { 'LiJianying' => 'lijy91@foxmail.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'SVProgressHUD'
-
   s.platform = :ios, '8.0'
 
-  # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64' }
+  s.default_subspec = 'SVProgressHUD_Core'
+  s.subspec 'SVProgressHUD_Core' do |core|
+    core.source_files = 'SVProgressHUD/SVProgressHUD/*.{h,m}'
+    core.resources = 'SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle'
+  end
+
+  # Flutter.framework does not contain a i386 slice.
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
 end
