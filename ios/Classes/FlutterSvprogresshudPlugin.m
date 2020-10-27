@@ -69,30 +69,6 @@
     }
 }
 
-- (void)showInfo:(FlutterMethodCall*)call
-          result:(FlutterResult)result
-{
-    NSString *status = call.arguments[@"status"];
-    
-    [SVProgressHUD showInfoWithStatus:status];
-}
-
-- (void)showSuccess:(FlutterMethodCall*)call
-             result:(FlutterResult)result
-{
-    NSString *status = call.arguments[@"status"];
-    
-    [SVProgressHUD showSuccessWithStatus: status];
-}
-
-- (void)showError:(FlutterMethodCall*)call
-           result:(FlutterResult)result
-{
-    NSString *status = call.arguments[@"status"];
-    
-    [SVProgressHUD showErrorWithStatus: status];
-}
-
 - (void)showProgress:(FlutterMethodCall*)call
               result:(FlutterResult)result
 {
@@ -122,6 +98,30 @@
     } else {
         [SVProgressHUD dismissWithCompletion:completion];
     }
+}
+
+- (void)showInfo:(FlutterMethodCall*)call
+          result:(FlutterResult)result
+{
+    NSString *status = call.arguments[@"status"];
+    
+    [SVProgressHUD showInfoWithStatus:status];
+}
+
+- (void)showSuccess:(FlutterMethodCall*)call
+             result:(FlutterResult)result
+{
+    NSString *status = call.arguments[@"status"];
+    
+    [SVProgressHUD showSuccessWithStatus: status];
+}
+
+- (void)showError:(FlutterMethodCall*)call
+           result:(FlutterResult)result
+{
+    NSString *status = call.arguments[@"status"];
+    
+    [SVProgressHUD showErrorWithStatus: status];
 }
 
 - (void)setDefaultStyle:(FlutterMethodCall*)call
