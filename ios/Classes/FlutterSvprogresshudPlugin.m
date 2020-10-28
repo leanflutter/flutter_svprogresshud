@@ -16,6 +16,9 @@
         [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeNative];
         [SVProgressHUD setDefaultStyle: SVProgressHUDStyleDark];
         [SVProgressHUD setDefaultMaskType: SVProgressHUDMaskTypeClear];
+        [SVProgressHUD setForegroundColor:[UIColor greenColor]];
+        [SVProgressHUD setBackgroundColor:[UIColor redColor]];
+        [SVProgressHUD setBackgroundLayerColor:[UIColor blueColor]];
     }
     return self;
 }
@@ -176,9 +179,9 @@
 - (void)setRingThickness:(FlutterMethodCall*)call
                   result:(FlutterResult)result
 {
-    NSNumber *width = call.arguments[@"width"];
+    NSNumber *ringThickness = call.arguments[@"ringThickness"];
     
-    [SVProgressHUD setRingThickness: [width floatValue]];
+    [SVProgressHUD setRingThickness: [ringThickness floatValue]];
 }
 - (void)setRingRadius:(FlutterMethodCall*)call
                result:(FlutterResult)result

@@ -1,24 +1,24 @@
 package org.leanflutter.plugins.flutter_svprogresshud;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Handler;
-import android.widget.ImageView;
 
-import com.kaopiz.kprogresshud.KProgressHUD;
+import org.leanflutter.svprogresshud.SVProgressHUD;
+import org.leanflutter.svprogresshud.SVProgressHUDAnimationType;
+import org.leanflutter.svprogresshud.SVProgressHUDMaskType;
+import org.leanflutter.svprogresshud.SVProgressHUDStyle;
+import org.leanflutter.svprogresshud.SVSize;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
-
 class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
     private Activity activity;
-    private KProgressHUD hud;
-
-    private float cornerRadius = 14;
+    private SVProgressHUD svProgressHUD;
 
     public MethodCallHandlerImpl(Activity activity) {
         this.activity = activity;
+        this.svProgressHUD = new SVProgressHUD(this.activity);
     }
 
     @Override
@@ -77,12 +77,7 @@ class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
 
     private void show(MethodCall call, MethodChannel.Result result) {
         String status = call.argument("status");
-
-        hud = KProgressHUD.create(activity)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setCornerRadius(cornerRadius)
-                .setLabel(status)
-                .show();
+        svProgressHUD.showWithStatus(status);
     }
 
     private void showProgress(MethodCall call, MethodChannel.Result result) {
@@ -93,18 +88,10 @@ class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
             progress = (Number) call.argument("progress");
         }
 
-        if (hud == null) {
-            hud = KProgressHUD.create(activity)
-                    .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
-                    .setCornerRadius(cornerRadius)
-                    .setMaxProgress(100);
-        }
+        svProgressHUD.showProgress(progress.floatValue(), status);
 
-        hud.setLabel(status);
-        hud.setProgress((int) (progress.doubleValue() * 100));
-
-        if (!hud.isShowing()) {
-            hud.show();
+        if (!svProgressHUD.isVisible()) {
+            svProgressHUD.show();
         }
     }
 
@@ -114,92 +101,86 @@ class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
 
         Handler handler = new Handler();
         handler.postDelayed(() -> {
-            if (hud != null && hud.isShowing()) {
-                hud.dismiss();
-                hud = null;
-
-                result.success(true);
-            }
+            svProgressHUD.dismiss();
+            result.success(true);
         }, delay);
     }
 
     private void showInfo(MethodCall call, MethodChannel.Result result) {
         String status = call.argument("status");
-
-        ImageView imageView = new ImageView(activity);
-        imageView.setImageResource(R.mipmap.info);
-        imageView.setColorFilter(Color.WHITE);
-
-        hud = KProgressHUD.create(activity)
-                .setCornerRadius(cornerRadius)
-                .setCustomView(imageView)
-                .setLabel(status)
-                .show();
+        svProgressHUD.showInfoWithStatus(status);
     }
 
     private void showSuccess(MethodCall call, MethodChannel.Result result) {
         String status = call.argument("status");
-
-        ImageView imageView = new ImageView(activity);
-        imageView.setImageResource(R.mipmap.success);
-        imageView.setColorFilter(Color.WHITE);
-
-        hud = KProgressHUD.create(activity)
-                .setCornerRadius(cornerRadius)
-                .setCustomView(imageView)
-                .setLabel(status)
-                .show();
+        svProgressHUD.showSuccessWithStatus(status);
     }
 
     private void showError(MethodCall call, MethodChannel.Result result) {
         String status = call.argument("status");
-
-        ImageView imageView = new ImageView(activity);
-        imageView.setImageResource(R.mipmap.error);
-        imageView.setColorFilter(Color.WHITE);
-
-        hud = KProgressHUD.create(activity)
-                .setCornerRadius(cornerRadius)
-                .setCustomView(imageView)
-                .setLabel(status)
-                .show();
+        svProgressHUD.showErrorWithStatus(status);
     }
 
     private void setDefaultStyle(MethodCall call, MethodChannel.Result result) {
-
+        String style = (String) call.argument("style");
+        svProgressHUD.setDefaultStyle(SVProgressHUDStyle.fromString(style));
     }
 
     private void setDefaultMaskType(MethodCall call, MethodChannel.Result result) {
-
+        String maskType = (String) call.argument("maskType");
+        svProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.fromString(maskType));
     }
 
     private void setDefaultAnimationType(MethodCall call, MethodChannel.Result result) {
-
+        String type = (String) call.argument("type");
+        svProgressHUD.setDefaultAnimationType(SVProgressHUDAnimationType.fromString(type));
     }
 
     private void setMinimumSize(MethodCall call, MethodChannel.Result result) {
-
+        Number width = (Number) call.argument("width");
+        Number height = (Number) call.argument("height");
+        svProgressHUD.setMinimumSize(new SVSize(width.floatValue(), height.floatValue()));
     }
 
     private void setRingThickness(MethodCall call, MethodChannel.Result result) {
-
+        Number ringThickness = (Number) call.argument("ringThickness");
+        svProgressHUD.setRingThickness(ringThickness.floatValue());
     }
 
     private void setRingRadius(MethodCall call, MethodChannel.Result result) {
-
+        Number radius = (Number) call.argument("radius");
+        svProgressHUD.setRingRadius(radius.floatValue());
     }
 
     private void setRingNoTextRadius(MethodCall call, MethodChannel.Result result) {
-
+        Number radius = (Number) call.argument("radius");
+        svProgressHUD.setRingNoTextRadius(radius.floatValue());
     }
 
     private void setCornerRadius(MethodCall call, MethodChannel.Result result) {
         Number cornerRadius = (Number) call.argument("cornerRadius");
-        this.cornerRadius = cornerRadius.floatValue();
+        svProgressHUD.setCornerRadius(cornerRadius.floatValue());
     }
 
-    private void setHapticsEnabled(MethodCall call, MethodChannel.Result result) {
+    private void setForegroundColor(MethodCall call, MethodChannel.Result result) {
 
+    }
+
+    private void setForegroundImageColor(MethodCall call, MethodChannel.Result result) {
+
+    }
+
+    private void setBackgroundColor(MethodCall call, MethodChannel.Result result) {
+
+    }
+
+    private void setBackgroundLayerColor(MethodCall call, MethodChannel.Result result) {
+    }
+
+
+    private void setHapticsEnabled(MethodCall call, MethodChannel.Result result) {
+        boolean hapticsEnabled = (boolean) call.argument("hapticsEnabled");
+        svProgressHUD.setHapticsEnabled(hapticsEnabled);
     }
 }
 

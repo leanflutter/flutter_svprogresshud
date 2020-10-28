@@ -87,8 +87,8 @@ class SVProgressHUD {
   }
 
   // default is 2 pt
-  static void setRingThickness(num width) {
-    Map<String, dynamic> arguments = {'width': width};
+  static void setRingThickness(num ringThickness) {
+    Map<String, dynamic> arguments = {'ringThickness': ringThickness};
     _channel.invokeMethod('setRingThickness', arguments);
   }
 

@@ -272,21 +272,16 @@ class _HomePageState extends State<HomePage> {
           title: Text('MaskType'),
           trailing: ToggleButtons(
             children: <Widget>[
-              for (var maskType in SVProgressHUDMaskType.values
-                  .where((e) => e != SVProgressHUDMaskType.custom)
-                  .toList())
+              for (var maskType in SVProgressHUDMaskType.values)
                 Text(maskType.name),
             ],
             onPressed: (int index) {
-              _maskType = SVProgressHUDMaskType.values
-                  .where((e) => e != SVProgressHUDMaskType.custom)
-                  .toList()[index];
+              _maskType = SVProgressHUDMaskType.values[index];
               _updateHUDConfig();
 
               setState(() {});
             },
             isSelected: SVProgressHUDMaskType.values
-                .where((e) => e != SVProgressHUDMaskType.custom)
                 .map((e) => e == _maskType)
                 .toList(),
           ),
@@ -484,14 +479,20 @@ class _HomePageState extends State<HomePage> {
         title: const Text('flutter_svprogresshud'),
         elevation: 0,
       ),
-      body: ListView(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).padding.bottom,
+      body: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) currentFocus.unfocus();
+        },
+        child: ListView(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).padding.bottom,
+          ),
+          children: [
+            _buildSectionCustomization(context),
+            _buildSectionExamples(context),
+          ],
         ),
-        children: [
-          _buildSectionCustomization(context),
-          _buildSectionExamples(context),
-        ],
       ),
     );
   }
