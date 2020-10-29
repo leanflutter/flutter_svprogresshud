@@ -1,13 +1,12 @@
 package org.leanflutter.plugins.flutter_svprogresshud;
 
 import android.app.Activity;
-import android.os.Handler;
 
 import org.leanflutter.svprogresshud.SVProgressHUD;
 import org.leanflutter.svprogresshud.SVProgressHUDAnimationType;
+import org.leanflutter.svprogresshud.SVProgressHUDDismissCompletion;
 import org.leanflutter.svprogresshud.SVProgressHUDMaskType;
 import org.leanflutter.svprogresshud.SVProgressHUDStyle;
-import org.leanflutter.svprogresshud.SVSize;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -99,11 +98,7 @@ class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
         int delay = 0;
         if (call.hasArgument("delay")) delay = (int) call.argument("delay");
 
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            svProgressHUD.dismiss();
-            result.success(true);
-        }, delay);
+        svProgressHUD.dismissWithDelay(delay > 0 ? (delay / 1000f) : 0, () -> result.success(true));
     }
 
     private void showInfo(MethodCall call, MethodChannel.Result result) {
@@ -139,7 +134,7 @@ class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
     private void setMinimumSize(MethodCall call, MethodChannel.Result result) {
         Number width = (Number) call.argument("width");
         Number height = (Number) call.argument("height");
-        svProgressHUD.setMinimumSize(new SVSize(width.floatValue(), height.floatValue()));
+        svProgressHUD.setMinimumSize(width.floatValue(), height.floatValue());
     }
 
     private void setRingThickness(MethodCall call, MethodChannel.Result result) {
@@ -163,20 +158,44 @@ class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
     }
 
     private void setForegroundColor(MethodCall call, MethodChannel.Result result) {
-
+        Number color = (Number) call.argument("color");
+        svProgressHUD.setForegroundColor(color.intValue());
     }
 
     private void setForegroundImageColor(MethodCall call, MethodChannel.Result result) {
-
+        Number color = (Number) call.argument("color");
+        svProgressHUD.setForegroundImageColor(color.intValue());
     }
 
     private void setBackgroundColor(MethodCall call, MethodChannel.Result result) {
-
+        Number color = (Number) call.argument("color");
+        svProgressHUD.setBackgroundColor(color.intValue());
     }
 
     private void setBackgroundLayerColor(MethodCall call, MethodChannel.Result result) {
+        Number color = (Number) call.argument("color");
+        svProgressHUD.setBackgroundLayerColor(color.intValue());
     }
 
+    public void setImageViewSize(MethodCall call, MethodChannel.Result result) {
+        Number width = (Number) call.argument("width");
+        Number height = (Number) call.argument("height");
+        svProgressHUD.setImageViewSize(width.floatValue(), height.floatValue());
+    }
+
+    public void setShouldTintImages(boolean shouldTintImages) {
+        svProgressHUD.setShouldTintImages(shouldTintImages);
+    }
+
+    public void setFadeInAnimationDuration(MethodCall call, MethodChannel.Result result) {
+        Number duration = (Number) call.argument("duration");
+        svProgressHUD.setFadeInAnimationDuration(duration.floatValue());
+    }
+
+    public void setFadeOutAnimationDuration(MethodCall call, MethodChannel.Result result) {
+        Number duration = (Number) call.argument("duration");
+        svProgressHUD.setFadeOutAnimationDuration(duration.floatValue());
+    }
 
     private void setHapticsEnabled(MethodCall call, MethodChannel.Result result) {
         boolean hapticsEnabled = (boolean) call.argument("hapticsEnabled");

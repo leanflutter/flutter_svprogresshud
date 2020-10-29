@@ -1,62 +1,164 @@
 package org.leanflutter.svprogresshud;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.SweepGradient;
+import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.animation.LinearInterpolator;
 
-import org.leanflutter.plugins.flutter_svprogresshud.R;
+public class SVIndefiniteAnimatedView extends View {
+    private static final int ROTATION_DURATION = 1200;
+    private static final int ROTATION_LENGTH = 360;
 
-public class SVIndefiniteAnimatedView extends ImageView implements View.OnLayoutChangeListener {
-    private Runnable animationAction;
+    private RectF oval;
+    private Paint paint;
 
-    private long delayMillis = 100;
+    private SweepGradient gradient;
+    private int[] gradientFromToColors;
+    private float[] gradientFromToPositions;
+
+    private int startAngle = 0;
+    private int sweepAngle = 0;
+
+    private ObjectAnimator animator;
     private float toDegrees = 0;
+
+    // Props
+    private float radius;
+    private int strokeColor = Color.BLACK;
+    private float strokeThickness = 2;
 
     public SVIndefiniteAnimatedView(Context context) {
         super(context);
-        setImageResource(R.drawable.svprogresshud_spinning);
-        removeOnLayoutChangeListener(this);
+        init();
     }
 
-    private void startAnimation() {
-        if (animationAction == null) {
-            animationAction = () -> {
-                toDegrees += 45;
-                if (toDegrees > 360) toDegrees = toDegrees - 360;
-
-                invalidate();
-                postDelayed(animationAction, delayMillis);
-            };
-        }
-        post(animationAction);
+    public SVIndefiniteAnimatedView(Context context,
+                                    AttributeSet attrs) {
+        super(context, attrs);
+        init();
     }
 
-    private void stopAnimation() {
-        removeCallbacks(animationAction);
-        animationAction = null;
+    public SVIndefiniteAnimatedView(Context context,
+                                    AttributeSet attrs,
+                                    int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.rotate(toDegrees, getWidth() / 2.0f, getHeight() / 2.0f);
-        super.onDraw(canvas);
+        if (!animator.isStarted()) {
+            animator.start();
+        }
+        canvas.rotate(toDegrees, getWidth() / 2, getHeight() / 2);
+
+        float left = Utils.dp2px(getContext(), strokeThickness);
+        float top = Utils.dp2px(getContext(), strokeThickness);
+        float right = getWidth() - Utils.dp2px(getContext(), strokeThickness);
+        float bottom = getHeight() - Utils.dp2px(getContext(), strokeThickness);
+        oval.set(left, top, right, bottom);
+
+        canvas.drawArc(oval, startAngle, sweepAngle, false, paint);
     }
 
     @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        startAnimation();
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int dimension = Utils.dp2px(getContext(), (this.radius + this.strokeThickness / 2 + 5) * 2);
+        setMeasuredDimension(dimension, dimension);
     }
 
     @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        stopAnimation();
+    protected void onSizeChanged(int newWidth, int newHeight, int oldw, int oldh) {
+        super.onSizeChanged(newWidth, newHeight, oldw, oldh);
+        float centerX = newWidth / 2;
+        float centerY = newHeight / 2;
+        gradient = new SweepGradient(centerX, centerY, gradientFromToColors, gradientFromToPositions);
+
+        paint.setShader(gradient);
+
+        float cupRadius = Utils.dp2px(getContext(), strokeThickness);
+        float arcRadius = newWidth / 2f - Utils.dp2px(getContext(), strokeThickness);
+        startAngle = computeOffset(cupRadius, arcRadius);
+
+        if (getParent() == null) {
+            animator.cancel();
+        }
     }
 
-    @Override
-    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-        stopAnimation();
+    private static int computeOffset(float capRadius, float arcRadius) {
+        float sinus = capRadius / arcRadius;
+        double degreeRad = Math.asin(sinus);
+        double degree = Math.toDegrees(degreeRad);
+        return (int) Math.ceil(degree);
+    }
+
+    private void init() {
+        // disable hardware acceleration
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
+        oval = new RectF();
+
+        paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(strokeColor);
+        paint.setStrokeWidth(Utils.dp2px(getContext(), strokeThickness));
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+
+        updateSeepAngle();
+        updateSweepGradientParams();
+
+        animator = createRotateAnimator();
+    }
+
+    private ObjectAnimator createRotateAnimator() {
+        ObjectAnimator rotateAnimator = ObjectAnimator.ofFloat(this, "rotation", 0, ROTATION_LENGTH);
+        rotateAnimator.setDuration(ROTATION_DURATION);
+        rotateAnimator.setInterpolator(new LinearInterpolator());
+        rotateAnimator.setRepeatMode(ValueAnimator.RESTART);
+        rotateAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        return rotateAnimator;
+    }
+
+    private void updateSeepAngle() {
+        sweepAngle = 360 - Utils.dp2px(getContext(), strokeThickness) * 2;
+    }
+
+    private void updateSweepGradientParams() {
+        gradientFromToColors = new int[]{Color.TRANSPARENT, strokeColor};
+        gradientFromToPositions = new float[]{0, sweepAngle / 360f};
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
+
+    public void setStrokeColor(int strokeColor) {
+        this.strokeColor = strokeColor;
+        paint.setColor(strokeColor);
+
+        updateSeepAngle();
+        updateSweepGradientParams();
+
+        invalidate();
+    }
+
+    public void setStrokeThickness(float strokeThickness) {
+        this.strokeThickness = strokeThickness;
+        paint.setStrokeWidth(Utils.dp2px(getContext(), strokeThickness));
+
+        updateSeepAngle();
+        updateSweepGradientParams();
+
+        invalidate();
     }
 }

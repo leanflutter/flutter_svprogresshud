@@ -1,19 +1,12 @@
 package org.leanflutter.svprogresshud;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.os.Handler;
-import android.util.Log;
-import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -29,6 +22,7 @@ public class SVProgressHUD {
 
     private GradientDrawable hudViewBackgroundDrawable;
     private SVIndefiniteAnimatedView indefiniteAnimatedView;
+    private UIActivityIndicatorView activityIndicatorView;
     private SVProgressAnimatedView progressAnimatedView;
 
     private FrameLayout contentView;
@@ -44,6 +38,10 @@ public class SVProgressHUD {
     private Animation animHudViewFadeIn;
     private Animation animHudViewFadeOut;
 
+    private Handler dismissHandler = new Handler();
+    private Runnable dismissAction;
+    private Runnable dismissDelayAction;
+
     private boolean _isInitializing;
 
     // Customization
@@ -52,7 +50,8 @@ public class SVProgressHUD {
     private SVProgressHUDAnimationType defaultAnimationType;
 
     //@property (strong, nonatomic, nullable) UIView *containerView;                                // if nil then use default window level
-    private SVSize minimumSize;                                                                     // default is CGSizeZero, can be used to avoid resizing for a larger message
+    private float minimumWidth;
+    private float minimumHeight;
     private float ringThickness;                                                                    // default is 2 pt
     private float ringRadius;                                                                       // default is 18 pt
     private float ringNoTextRadius;                                                                 // default is 24 pt
@@ -62,20 +61,21 @@ public class SVProgressHUD {
     private int foregroundColor;
     private int foregroundImageColor;
     private int backgroundLayerColor;
-    private SVSize imageViewSize;                                                                     // default is 28x28 pt
+    private float imageViewWidth;                                                                   // default is 28 pt
+    private float imageViewHeight;                                                                  // default is 28 pt
     private boolean shouldTintImages;                                                               // default is YES
     private ImageView infoImage;
     private ImageView successImage;
     private ImageView errorImage;
     //@property (strong, nonatomic, nonnull) UIView *viewForExtension UI_APPEARANCE_SELECTOR;       // default is nil, only used if #define SV_APP_EXTENSIONS is set
     //@property (assign, nonatomic) NSTimeInterval graceTimeInterval;                               // default is 0 seconds
-    //@property (assign, nonatomic) NSTimeInterval minimumDismissTimeInterval;                      // default is 5.0 seconds
-    //@property (assign, nonatomic) NSTimeInterval maximumDismissTimeInterval;                      // default is CGFLOAT_MAX
+    private float minimumDismissTimeInterval;                                                       // default is 5.0 seconds
+    private float maximumDismissTimeInterval;                                                       // default is CGFLOAT_MAX
 
     //@property (assign, nonatomic) UIOffset offsetFromCenter UI_APPEARANCE_SELECTOR; // default is 0, 0
 
-    private float fadeInAnimationDuration;  // default is 0.15
-    private float fadeOutAnimationDuration; // default is 0.15
+    private float fadeInAnimationDuration;                                                          // default is 0.15
+    private float fadeOutAnimationDuration;                                                         // default is 0.15
 
     //@property (assign, nonatomic) UIWindowLevel maxSupportedWindowLevel;                          // default is UIWindowLevelNormal
 
@@ -96,6 +96,7 @@ public class SVProgressHUD {
         hudViewBackgroundDrawable = new GradientDrawable();
         hudViewBackgroundDrawable.setShape(GradientDrawable.RECTANGLE);
         indefiniteAnimatedView = new SVIndefiniteAnimatedView(activity);
+        activityIndicatorView = new UIActivityIndicatorView(activity);
         progressAnimatedView = new SVProgressAnimatedView(activity);
 
         contentView = (FrameLayout) layoutInflater.inflate(R.layout.svprogresshud_layout, null, false);
@@ -107,23 +108,10 @@ public class SVProgressHUD {
         statusLabel = contentView.findViewById(R.id.statusLabel);
 
         animBackgroundLayerFadeIn = AnimationUtils.loadAnimation(activity, R.anim.svprogresshud_bg_fade_in);
-        animBackgroundLayerFadeIn.setDuration((int) (fadeInAnimationDuration * 1000));
         animBackgroundLayerFadeOut = AnimationUtils.loadAnimation(activity, R.anim.svprogresshud_bg_fade_out);
-        animBackgroundLayerFadeOut.setDuration((int) (fadeInAnimationDuration * 1000));
 
         animHudViewFadeIn = AnimationUtils.loadAnimation(activity, R.anim.svprogresshud_hudview_fade_in);
-        animHudViewFadeIn.setDuration((int) (fadeInAnimationDuration * 1000));
         animHudViewFadeOut = AnimationUtils.loadAnimation(activity, R.anim.svprogresshud_hudview_fade_out);
-        animHudViewFadeOut.setDuration((int) (fadeInAnimationDuration * 1000));
-
-//        self.userInteractionEnabled = NO;
-//        self.activityCount = 0;
-//
-//        self.backgroundView.alpha = 0.0f;
-//        self.imageView.alpha = 0.0f;
-//        self.statusLabel.alpha = 0.0f;
-//        self.indefiniteAnimatedView.alpha = 0.0f;
-//        self.ringView.alpha = self.backgroundRingView.alpha = 0.0f;
 
         infoImage = new ImageView(activity);
         infoImage.setImageResource(R.drawable.svprogresshud_info);
@@ -142,10 +130,10 @@ public class SVProgressHUD {
         setDefaultMaskType(SVProgressHUDMaskType.None);
         setDefaultStyle(SVProgressHUDStyle.Light);
         setDefaultAnimationType(SVProgressHUDAnimationType.Flat);
-        setMinimumSize(new SVSize(0, 0));
+        setMinimumSize(0, 0);
 //        _font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
 
-        setImageViewSize(new SVSize(28, 28));
+        setImageViewSize(28, 28);
         setShouldTintImages(true);
 
         setRingThickness(2.0f);
@@ -155,8 +143,8 @@ public class SVProgressHUD {
         setCornerRadius(14.0f);
 
 //        _graceTimeInterval = 0.0f;
-//        _minimumDismissTimeInterval = 5.0;
-//        _maximumDismissTimeInterval = CGFLOAT_MAX;
+        setMinimumDismissTimeInterval(5.0f);
+        setMaximumDismissTimeInterval(Float.MAX_VALUE);
 //
         setFadeInAnimationDuration(0.15f);
         setFadeOutAnimationDuration(0.15f);
@@ -165,10 +153,6 @@ public class SVProgressHUD {
 
         hapticsEnabled = false;
         motionEffectEnabled = true;
-
-//        // Accessibility support
-//        self.accessibilityIdentifier = @ "SVProgressHUD";
-//        self.isAccessibilityElement = YES;
 
         _isInitializing = false;
     }
@@ -179,7 +163,8 @@ public class SVProgressHUD {
         switch (defaultStyle) {
             case Light:
                 hudViewBackgroundDrawable.setColor(Color.WHITE);
-                indefiniteAnimatedView.setColorFilter(Color.BLACK);
+                indefiniteAnimatedView.setStrokeColor(Color.BLACK);
+                activityIndicatorView.setColorFilter(Color.BLACK);
                 progressAnimatedView.setThumbColor(Color.argb(0x1a, 0x00, 0x00, 0x00));
                 progressAnimatedView.setActiveColor(Color.BLACK);
                 statusLabel.setTextColor(Color.BLACK);
@@ -189,9 +174,10 @@ public class SVProgressHUD {
                 break;
             case Dark:
                 hudViewBackgroundDrawable.setColor(Color.BLACK);
-                indefiniteAnimatedView.setColorFilter(Color.WHITE);
-                progressAnimatedView.setThumbColor(Color.argb(0x1a, 0x00, 0x00, 0x00));
-                progressAnimatedView.setActiveColor(Color.BLACK);
+                indefiniteAnimatedView.setStrokeColor(Color.WHITE);
+                activityIndicatorView.setColorFilter(Color.WHITE);
+                progressAnimatedView.setThumbColor(Color.argb(0x1a, 0xff, 0xff, 0xff));
+                progressAnimatedView.setActiveColor(Color.WHITE);
                 statusLabel.setTextColor(Color.WHITE);
                 infoImage.setColorFilter(Color.WHITE);
                 successImage.setColorFilter(Color.WHITE);
@@ -199,8 +185,9 @@ public class SVProgressHUD {
                 break;
             case Custom:
                 hudViewBackgroundDrawable.setColor(backgroundColor);
-                indefiniteAnimatedView.setColorFilter(foregroundColor);
-                progressAnimatedView.setThumbColor(Color.argb(0x1a, 0x00, 0x00, 0x00));
+                indefiniteAnimatedView.setStrokeColor(foregroundColor);
+                activityIndicatorView.setColorFilter(foregroundColor);
+                progressAnimatedView.setThumbColor(Color.argb(0x1a, Color.red(foregroundColor), Color.green(foregroundColor), Color.blue(foregroundColor)));
                 progressAnimatedView.setActiveColor(foregroundColor);
                 statusLabel.setTextColor(foregroundColor);
                 infoImage.setColorFilter(foregroundColor);
@@ -239,21 +226,24 @@ public class SVProgressHUD {
     }
 
     //+ (void)setContainerView:(nullable UIView*)containerView;               // default is window level
-    public void setMinimumSize(SVSize minimumSize) {
-        this.minimumSize = minimumSize;
+    public void setMinimumSize(float width, float height) {
+        this.minimumWidth = width;
+        this.minimumHeight = height;
 
-        this.hudView.setMinimumWidth((int) this.minimumSize.getWidth());
-        this.hudView.setMinimumHeight((int) this.minimumSize.getHeight());
+        this.hudView.setMinimumWidth((int) this.minimumWidth);
+        this.hudView.setMinimumHeight((int) this.minimumHeight);
     }
 
     public void setRingThickness(float ringThickness) {
         this.ringThickness = ringThickness;
-        progressAnimatedView.setRingThickness(ringThickness);
+        indefiniteAnimatedView.setStrokeThickness(this.ringThickness);
+        progressAnimatedView.setRingThickness(this.ringThickness);
     }
 
     public void setRingRadius(float radius) {
         this.ringRadius = radius;
         if (statusLabel.getText() == null || statusLabel.getText().length() == 0) {
+            indefiniteAnimatedView.setRadius(ringRadius);
             progressAnimatedView.setRingRadius(ringRadius);
         }
     }
@@ -261,13 +251,14 @@ public class SVProgressHUD {
     public void setRingNoTextRadius(float radius) {
         this.ringNoTextRadius = radius;
         if (statusLabel.getText() != null && statusLabel.getText().length() > 0) {
+            indefiniteAnimatedView.setRadius(ringNoTextRadius);
             progressAnimatedView.setRingRadius(ringNoTextRadius);
         }
     }
 
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
-        hudViewBackgroundDrawable.setCornerRadius(Utils.dp2px(activity, cornerRadius));
+        hudViewBackgroundDrawable.setCornerRadius(Utils.dp2px(activity, this.cornerRadius));
     }
 
     void setBorderColor(int color) {
@@ -297,15 +288,16 @@ public class SVProgressHUD {
         this.backgroundLayer.setBackgroundColor(color);
     }
 
-    public void setImageViewSize(SVSize size) {
-        this.imageViewSize = size;
+    public void setImageViewSize(float width, float height) {
+        this.imageViewWidth = width;
+        this.imageViewHeight = height;
 
-        this.infoImage.setMinimumWidth(Utils.dp2px(activity, (int) imageViewSize.getWidth()));
-        this.infoImage.setMinimumHeight(Utils.dp2px(activity, (int) imageViewSize.getHeight()));
-        this.successImage.setMinimumWidth(Utils.dp2px(activity, (int) imageViewSize.getWidth()));
-        this.successImage.setMinimumHeight(Utils.dp2px(activity, (int) imageViewSize.getHeight()));
-        this.errorImage.setMinimumWidth(Utils.dp2px(activity, (int) imageViewSize.getWidth()));
-        this.errorImage.setMinimumHeight(Utils.dp2px(activity, (int) imageViewSize.getHeight()));
+        this.infoImage.setMinimumWidth(Utils.dp2px(activity, (int) imageViewWidth));
+        this.infoImage.setMinimumHeight(Utils.dp2px(activity, (int) imageViewHeight));
+        this.successImage.setMinimumWidth(Utils.dp2px(activity, (int) imageViewWidth));
+        this.successImage.setMinimumHeight(Utils.dp2px(activity, (int) imageViewHeight));
+        this.errorImage.setMinimumWidth(Utils.dp2px(activity, (int) imageViewWidth));
+        this.errorImage.setMinimumHeight(Utils.dp2px(activity, (int) imageViewHeight));
     }
 
     public void setShouldTintImages(boolean shouldTintImages) {
@@ -317,17 +309,31 @@ public class SVProgressHUD {
     //+ (void)setErrorImage:(nonnull UIImage*)image;                          // default is the bundled error image provided by Freepik
     //+ (void)setViewForExtension:(nonnull UIView*)view;                      // default is nil, only used if #define SV_APP_EXTENSIONS is set
     //+ (void)setGraceTimeInterval:(NSTimeInterval)interval;                  // default is 0 seconds
-    //+ (void)setMinimumDismissTimeInterval:(NSTimeInterval)interval;         // default is 5.0 seconds
-    //+ (void)setMaximumDismissTimeInterval:(NSTimeInterval)interval;         // default is infinite
+
+    public void setMinimumDismissTimeInterval(float interval) {
+        this.minimumDismissTimeInterval = interval;
+    }
+
+    public void setMaximumDismissTimeInterval(float interval) {
+        this.maximumDismissTimeInterval = interval;
+    }
+
     public void setFadeInAnimationDuration(float duration) {
         this.fadeInAnimationDuration = duration;
+
+        animBackgroundLayerFadeIn.setDuration((int) (fadeInAnimationDuration * 1000));
+        animHudViewFadeIn.setDuration((int) (fadeInAnimationDuration * 1000));
     }
 
     public void setFadeOutAnimationDuration(float duration) {
-        this.fadeInAnimationDuration = duration;
+        this.fadeOutAnimationDuration = duration;
+
+        animBackgroundLayerFadeOut.setDuration((int) (fadeInAnimationDuration * 1000));
+        animHudViewFadeOut.setDuration((int) (fadeInAnimationDuration * 1000));
     }
 
     //+ (void)setMaxSupportedWindowLevel:(UIWindowLevel)windowLevel;          // default is UIWindowLevelNormal
+
     public void setHapticsEnabled(boolean hapticsEnabled) {
         this.hapticsEnabled = hapticsEnabled;
     }
@@ -337,19 +343,25 @@ public class SVProgressHUD {
     }
 
     // Show Methods
-    private void show(String status, ImageView imageView, float progress) {
+    private void show(
+            String status,
+            ImageView imageView,
+            float progress
+    ) {
         imageContainer.removeAllViews();
         if (imageView != null) {
             imageContainer.addView(imageView);
         } else if (progress != -1) {
-            imageContainer.addView(progressAnimatedView);
-        } else {
-            imageContainer.addView(indefiniteAnimatedView);
-        }
-
-        if (progress != -1) {
             progressAnimatedView.setProgress(progress);
             progressAnimatedView.setRingRadius(status != null ? this.ringRadius : this.ringNoTextRadius);
+            imageContainer.addView(progressAnimatedView);
+        } else {
+            indefiniteAnimatedView.setRadius(status != null ? this.ringRadius : this.ringNoTextRadius);
+            imageContainer.addView(defaultAnimationType == SVProgressHUDAnimationType.Flat ? indefiniteAnimatedView : activityIndicatorView);
+        }
+
+        if (imageView != null) {
+            dismissWithDelay(minimumDismissTimeInterval);
         }
 
         statusLabel.setText(status);
@@ -405,20 +417,51 @@ public class SVProgressHUD {
     //+ (void)popActivity; // decrease activity count, if activity count == 0 the HUD is dismissed
 
     public void dismiss() {
-        backgroundLayer.startAnimation(animBackgroundLayerFadeOut);
-        hudView.startAnimation(animHudViewFadeOut);
-
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            if (contentView.getParent() != null) {
-                decorView.removeView(contentView);
-            }
-        }, (int) (fadeOutAnimationDuration * 1000));
+        dismissWithDelay(0, null);
     }
 
-    //+ (void)dismissWithCompletion:(nullable SVProgressHUDDismissCompletion)completion;
-    //+ (void)dismissWithDelay:(NSTimeInterval)delay;
-    //+ (void)dismissWithDelay:(NSTimeInterval)delay completion:(nullable SVProgressHUDDismissCompletion)completion;
+    public void dismissWithCompletion(SVProgressHUDDismissCompletion completion) {
+        dismissWithDelay(0, completion);
+    }
+
+    public void dismissWithDelay(float delay) {
+        dismissWithDelay(delay, null);
+    }
+
+    public void dismissWithDelay(float delay, final SVProgressHUDDismissCompletion completion) {
+        if (dismissAction != null) {
+            dismissHandler.removeCallbacks(dismissAction);
+        }
+
+        dismissAction = () -> {
+            backgroundLayer.startAnimation(animBackgroundLayerFadeOut);
+            hudView.startAnimation(animHudViewFadeOut);
+            animHudViewFadeOut.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    if (contentView.getParent() != null) {
+                        decorView.removeView(contentView);
+                    }
+
+                    if (completion != null) {
+                        completion.onCompletion();
+                    }
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+        };
+
+        dismissHandler.postDelayed(dismissAction, (int) delay * 1000);
+    }
 
     public boolean isVisible() {
         return contentView.getParent() != null;

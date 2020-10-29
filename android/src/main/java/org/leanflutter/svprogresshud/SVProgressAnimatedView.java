@@ -45,6 +45,7 @@ public class SVProgressAnimatedView extends View {
         activePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         activePaint.setStyle(Paint.Style.STROKE);
         activePaint.setStrokeWidth(Utils.dp2px(getContext(), ringThickness));
+        activePaint.setStrokeCap(Paint.Cap.ROUND);
         activePaint.setColor(activeColor);
 
         oval = new RectF();
