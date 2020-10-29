@@ -84,6 +84,38 @@ SVProgressHUD.showSuccess(status: 'Great Success!');
 SVProgressHUD.showError(status: 'Failed with Error');
 ```
 
+## Customization
+
+`SVProgressHUD` can be customized via the following methods:
+
+```dart
+void setDefaultStyle(SVProgressHUDStyle style);                 // default is SVProgressHUDStyle.Light
+void setDefaultMaskType(SVProgressHUDMaskType maskType);        // default is SVProgressHUDMaskType.None
+void setDefaultAnimationType(SVProgressHUDAnimationType type);  // default is SVProgressHUDAnimationType.Flat
+void setMinimumSize(Size minimumSize);                          // default is Size.zero, can be used to avoid resizing
+void setRingThickness(num width);                               // default is 2 pt
+void setRingRadiu(num radius);                                  // default is 18 pt
+void setRingNoTextRadius(num radius);                           // default is 24 pt
+void setCornerRadius(num cornerRadius);                         // default is 14 pt
+void setBorderColor(Color color);                               // default is null
+void setBorderWidth(num width);                                 // default is 0
+void setForegroundColor(Color color);                           // default is Colors.black, only used for SVProgressHUDStyle.Custom
+void setForegroundImageColor(Color color);                      // default is the same as foregroundColor
+void setBackgroundColor(Color color);                           // default is Colors.white, only used for SVProgressHUDStyle.Custom
+void setBackgroundLayerColor(Color color);                      // default is [Color colorWithWhite:0 alpha:0.4], only used for SVProgressHUDMaskType.Custom
+void setImageViewSize(Size size);                               // default is 28x28 pt
+void setShouldTintImages(bool shouldTintImages);                // default is true
+void setInfoImage(UIImage image);                               // default is the bundled info image provided by Freepik
+void setSuccessImage(UIImage image);                            // default is bundled success image from Freepik
+void setErrorImage(UIImage image);                              // default is bundled error image from Freepik
+void setGraceTimeInterval(num interval);                        // default is 0 seconds
+void setMinimumDismissTimeInterval(num interval);               // default is 5.0 seconds
+void setMaximumDismissTimeInterval(num interval);               // default is CGFLOAT_MAX
+void setFadeInAnimationDuration(num duration);                  // default is 0.15 seconds
+void setFadeOutAnimationDuration(num duration);                 // default is 0.15 seconds
+void setHapticsEnabled(bool hapticsEnabled);                    // default is false
+```
+
 ## Related Links
 
 - https://github.com/SVProgressHUD/SVProgressHUD
