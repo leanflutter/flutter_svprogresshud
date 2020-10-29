@@ -49,14 +49,14 @@ You can show the status of indeterminate tasks using one of the following:
 
 ```dart
 SVProgressHUD.show();
-SVProgressHUD.show(status: 'Loading...');
+SVProgressHUD.show(status: 'Doing Stuff');
 ```
 
 If you'd like the HUD to reflect the progress of a task, use one of these:
 
 ```dart
 SVProgressHUD.showProgress(0.91);
-SVProgressHUD.showProgress(0.91, status: 'Processing...');
+SVProgressHUD.showProgress(0.91, status: 'Loading...');
 ```
 
 ### Dismissing the HUD
@@ -79,9 +79,9 @@ The HUD will get dismissed once the popActivity calls will match the number of s
 Or show a confirmation glyph before before getting dismissed a little bit later. The display time depends on `minimumDismissTimeInterval` and the length of the given string.
 
 ```dart
-SVProgressHUD.showInfo(status: 'A info message');
-SVProgressHUD.showSuccess(status: 'A success message');
-SVProgressHUD.showError(status: 'A error message');
+SVProgressHUD.showInfo(status: 'Useful Information.');
+SVProgressHUD.showSuccess(status: 'Great Success!');
+SVProgressHUD.showError(status: 'Failed with Error');
 ```
 
 ## Related Links
