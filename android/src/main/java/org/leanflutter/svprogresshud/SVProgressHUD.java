@@ -223,6 +223,19 @@ public class SVProgressHUD {
 
     public void setDefaultAnimationType(SVProgressHUDAnimationType type) {
         this.defaultAnimationType = type;
+
+        if (!(isVisible() && imageContainer.getChildCount() > 0)) {
+            return;
+        }
+
+        View firstChild = imageContainer.getChildAt(0);
+        if (defaultAnimationType == SVProgressHUDAnimationType.Flat && firstChild != indefiniteAnimatedView) {
+            imageContainer.removeAllViews();
+            imageContainer.addView(indefiniteAnimatedView);
+        } else if (defaultAnimationType == SVProgressHUDAnimationType.Native && firstChild != activityIndicatorView) {
+            imageContainer.removeAllViews();
+            imageContainer.addView(activityIndicatorView);
+        }
     }
 
     //+ (void)setContainerView:(nullable UIView*)containerView;               // default is window level
@@ -230,29 +243,29 @@ public class SVProgressHUD {
         this.minimumWidth = width;
         this.minimumHeight = height;
 
-        this.hudView.setMinimumWidth((int) this.minimumWidth);
-        this.hudView.setMinimumHeight((int) this.minimumHeight);
+        this.hudView.setMinimumWidth(Utils.dp2px(activity, this.minimumWidth));
+        this.hudView.setMinimumHeight(Utils.dp2px(activity, this.minimumHeight));
     }
 
     public void setRingThickness(float ringThickness) {
         this.ringThickness = ringThickness;
         indefiniteAnimatedView.setStrokeThickness(this.ringThickness);
-        progressAnimatedView.setRingThickness(this.ringThickness);
+        progressAnimatedView.setStrokeThickness(this.ringThickness);
     }
 
     public void setRingRadius(float radius) {
         this.ringRadius = radius;
-        if (statusLabel.getText() == null || statusLabel.getText().length() == 0) {
+        if (statusLabel.getText() != null && statusLabel.getText().length() > 0) {
             indefiniteAnimatedView.setRadius(ringRadius);
-            progressAnimatedView.setRingRadius(ringRadius);
+            progressAnimatedView.setRadius(ringRadius);
         }
     }
 
     public void setRingNoTextRadius(float radius) {
         this.ringNoTextRadius = radius;
-        if (statusLabel.getText() != null && statusLabel.getText().length() > 0) {
+        if (statusLabel.getText() == null || statusLabel.getText().length() == 0) {
             indefiniteAnimatedView.setRadius(ringNoTextRadius);
-            progressAnimatedView.setRingRadius(ringNoTextRadius);
+            progressAnimatedView.setRadius(ringNoTextRadius);
         }
     }
 
@@ -292,12 +305,12 @@ public class SVProgressHUD {
         this.imageViewWidth = width;
         this.imageViewHeight = height;
 
-        this.infoImage.setMinimumWidth(Utils.dp2px(activity, (int) imageViewWidth));
-        this.infoImage.setMinimumHeight(Utils.dp2px(activity, (int) imageViewHeight));
-        this.successImage.setMinimumWidth(Utils.dp2px(activity, (int) imageViewWidth));
-        this.successImage.setMinimumHeight(Utils.dp2px(activity, (int) imageViewHeight));
-        this.errorImage.setMinimumWidth(Utils.dp2px(activity, (int) imageViewWidth));
-        this.errorImage.setMinimumHeight(Utils.dp2px(activity, (int) imageViewHeight));
+        this.infoImage.setMinimumWidth(Utils.dp2px(activity, imageViewWidth));
+        this.infoImage.setMinimumHeight(Utils.dp2px(activity, imageViewHeight));
+        this.successImage.setMinimumWidth(Utils.dp2px(activity, imageViewWidth));
+        this.successImage.setMinimumHeight(Utils.dp2px(activity, imageViewHeight));
+        this.errorImage.setMinimumWidth(Utils.dp2px(activity, imageViewWidth));
+        this.errorImage.setMinimumHeight(Utils.dp2px(activity, imageViewHeight));
     }
 
     public void setShouldTintImages(boolean shouldTintImages) {
@@ -353,7 +366,7 @@ public class SVProgressHUD {
             imageContainer.addView(imageView);
         } else if (progress != -1) {
             progressAnimatedView.setProgress(progress);
-            progressAnimatedView.setRingRadius(status != null ? this.ringRadius : this.ringNoTextRadius);
+            progressAnimatedView.setRadius(status != null ? this.ringRadius : this.ringNoTextRadius);
             imageContainer.addView(progressAnimatedView);
         } else {
             indefiniteAnimatedView.setRadius(status != null ? this.ringRadius : this.ringNoTextRadius);

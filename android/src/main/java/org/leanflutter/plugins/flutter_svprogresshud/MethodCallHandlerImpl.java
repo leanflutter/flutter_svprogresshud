@@ -65,6 +65,36 @@ class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
             case "setCornerRadius":
                 this.setCornerRadius(call, result);
                 break;
+            case "setForegroundColor":
+                this.setForegroundColor(call, result);
+                break;
+            case "setForegroundImageColor":
+                this.setForegroundImageColor(call, result);
+                break;
+            case "setBackgroundColor":
+                this.setBackgroundColor(call, result);
+                break;
+            case "setBackgroundLayerColor":
+                this.setBackgroundLayerColor(call, result);
+                break;
+            case "setImageViewSize":
+                this.setImageViewSize(call, result);
+                break;
+            case "setShouldTintImages":
+                this.setShouldTintImages(call, result);
+                break;
+            case "setMinimumDismissTimeInterval":
+                this.setMinimumDismissTimeInterval(call, result);
+                break;
+            case "setMaximumDismissTimeInterval":
+                this.setMaximumDismissTimeInterval(call, result);
+                break;
+            case "setFadeInAnimationDuration":
+                this.setFadeInAnimationDuration(call, result);
+                break;
+            case "setFadeOutAnimationDuration":
+                this.setFadeOutAnimationDuration(call, result);
+                break;
             case "setHapticsEnabled":
                 this.setHapticsEnabled(call, result);
                 break;
@@ -183,8 +213,19 @@ class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
         svProgressHUD.setImageViewSize(width.floatValue(), height.floatValue());
     }
 
-    public void setShouldTintImages(boolean shouldTintImages) {
+    public void setShouldTintImages(MethodCall call, MethodChannel.Result result) {
+        boolean shouldTintImages = (boolean) call.argument("shouldTintImages");
         svProgressHUD.setShouldTintImages(shouldTintImages);
+    }
+
+    public void setMinimumDismissTimeInterval(MethodCall call, MethodChannel.Result result) {
+        Number interval = call.argument("interval");
+        svProgressHUD.setMinimumDismissTimeInterval(interval.floatValue());
+    }
+
+    public void setMaximumDismissTimeInterval(MethodCall call, MethodChannel.Result result) {
+        Number interval = call.argument("interval");
+        svProgressHUD.setMaximumDismissTimeInterval(interval.floatValue());
     }
 
     public void setFadeInAnimationDuration(MethodCall call, MethodChannel.Result result) {

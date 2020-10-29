@@ -78,15 +78,9 @@ public class SVIndefiniteAnimatedView extends View {
     @Override
     protected void onSizeChanged(int newWidth, int newHeight, int oldw, int oldh) {
         super.onSizeChanged(newWidth, newHeight, oldw, oldh);
-        float centerX = newWidth / 2;
-        float centerY = newHeight / 2;
-        gradient = new SweepGradient(centerX, centerY, gradientFromToColors, gradientFromToPositions);
 
-        paint.setShader(gradient);
-
-        float cupRadius = Utils.dp2px(getContext(), strokeThickness);
-        float arcRadius = newWidth / 2f - Utils.dp2px(getContext(), strokeThickness);
-        startAngle = computeOffset(cupRadius, arcRadius);
+        updateSeepAngle();
+        updateSweepGradientParams();
 
         if (getParent() == null) {
             animator.cancel();
@@ -130,12 +124,20 @@ public class SVIndefiniteAnimatedView extends View {
     }
 
     private void updateSeepAngle() {
-        sweepAngle = 360 - Utils.dp2px(getContext(), strokeThickness) * 2;
+        float cupRadius = Utils.dp2px(getContext(), strokeThickness);
+        float arcRadius = getWidth() / 2f - Utils.dp2px(getContext(), strokeThickness);
+        startAngle = computeOffset(cupRadius, arcRadius);
+        sweepAngle = 360 - Utils.dp2px(getContext(), strokeThickness * 2);
     }
 
     private void updateSweepGradientParams() {
         gradientFromToColors = new int[]{Color.TRANSPARENT, strokeColor};
         gradientFromToPositions = new float[]{0, sweepAngle / 360f};
+
+        float centerX = getWidth() / 2f;
+        float centerY = getHeight() / 2f;
+        gradient = new SweepGradient(centerX, centerY, gradientFromToColors, gradientFromToPositions);
+        paint.setShader(gradient);
     }
 
     public void setRadius(float radius) {

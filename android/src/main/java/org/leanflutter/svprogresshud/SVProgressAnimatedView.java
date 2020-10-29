@@ -10,8 +10,9 @@ import android.view.View;
 
 public class SVProgressAnimatedView extends View {
     private RectF oval;
-    private float ringThickness = 2.0f;
-    private float ringRadius = 24f;
+
+    private float radius = 24f;
+    private float strokeThickness = 2.0f;
 
     private int thumbColor = Color.BLACK;
     private Paint thumbPaint;
@@ -39,12 +40,12 @@ public class SVProgressAnimatedView extends View {
     private void init(Context context) {
         thumbPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         thumbPaint.setStyle(Paint.Style.STROKE);
-        thumbPaint.setStrokeWidth(Utils.dp2px(getContext(), ringThickness));
+        thumbPaint.setStrokeWidth(Utils.dp2px(getContext(), strokeThickness));
         thumbPaint.setColor(thumbColor);
 
         activePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         activePaint.setStyle(Paint.Style.STROKE);
-        activePaint.setStrokeWidth(Utils.dp2px(getContext(), ringThickness));
+        activePaint.setStrokeWidth(Utils.dp2px(getContext(), strokeThickness));
         activePaint.setStrokeCap(Paint.Cap.ROUND);
         activePaint.setColor(activeColor);
 
@@ -54,7 +55,7 @@ public class SVProgressAnimatedView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        int padding = Utils.dp2px(getContext(), 4);
+        int padding = Utils.dp2px(getContext(), strokeThickness);
         oval.set(padding, padding, w - padding, h - padding);
     }
 
@@ -62,7 +63,7 @@ public class SVProgressAnimatedView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int dimension = Utils.dp2px(getContext(), ringRadius * 2);
+        int dimension = Utils.dp2px(getContext(), radius * 2);
         setMeasuredDimension(dimension, dimension);
     }
 
@@ -74,15 +75,15 @@ public class SVProgressAnimatedView extends View {
         canvas.drawArc(oval, 270f, angle, false, activePaint);
     }
 
-    public void setRingThickness(float ringThickness) {
-        this.ringThickness = ringThickness;
+    public void setStrokeThickness(float strokeThickness) {
+        this.strokeThickness = strokeThickness;
 
-        thumbPaint.setStrokeWidth(Utils.dp2px(getContext(), ringThickness));
-        activePaint.setStrokeWidth(Utils.dp2px(getContext(), ringThickness));
+        thumbPaint.setStrokeWidth(Utils.dp2px(getContext(), strokeThickness));
+        activePaint.setStrokeWidth(Utils.dp2px(getContext(), strokeThickness));
     }
 
-    public void setRingRadius(float ringRadius) {
-        this.ringRadius = ringRadius;
+    public void setRadius(float radius) {
+        this.radius = radius;
     }
 
     public void setThumbColor(int thumbColor) {

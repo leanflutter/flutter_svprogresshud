@@ -57,19 +57,16 @@ class SVProgressHUD {
 
   static void showImage({String status}) {}
 
-  // default is SVProgressHUDStyleLight
   static void setDefaultStyle(SVProgressHUDStyle style) {
     Map<String, dynamic> arguments = {'style': style.name};
     _channel.invokeMethod('setDefaultStyle', arguments);
   }
 
-  // default is SVProgressHUDMaskTypeNone
   static void setDefaultMaskType(SVProgressHUDMaskType maskType) {
     Map<String, dynamic> arguments = {'maskType': maskType.name};
     _channel.invokeMethod('setDefaultMaskType', arguments);
   }
 
-  // default is SVProgressHUDAnimationTypeFlat
   static void setDefaultAnimationType(SVProgressHUDAnimationType type) {
     Map<String, dynamic> arguments = {'type': type.name};
     _channel.invokeMethod('setDefaultAnimationType', arguments);
@@ -77,7 +74,6 @@ class SVProgressHUD {
 
   // + (void)setContainerView:(UIView*)containerView;                    // default is window level
 
-  // default is CGSizeZero, can be used to avoid resizing
   static void setMinimumSize(Size minimumSize) {
     Map<String, dynamic> arguments = {
       'width': minimumSize.width,
@@ -86,50 +82,95 @@ class SVProgressHUD {
     _channel.invokeMethod('setMinimumSize', arguments);
   }
 
-  // default is 2 pt
   static void setRingThickness(num ringThickness) {
     Map<String, dynamic> arguments = {'ringThickness': ringThickness};
     _channel.invokeMethod('setRingThickness', arguments);
   }
 
-  // default is 18 pt
   static void setRingRadius(num radius) {
     Map<String, dynamic> arguments = {'radius': radius};
     _channel.invokeMethod('setRingRadius', arguments);
   }
 
-  // default is 24 pt
   static void setRingNoTextRadius(num radius) {
     Map<String, dynamic> arguments = {'radius': radius};
     _channel.invokeMethod('setRingNoTextRadius', arguments);
   }
 
-  // default is 14 pt
   static void setCornerRadius(num cornerRadius) {
     Map<String, dynamic> arguments = {'cornerRadius': cornerRadius};
     _channel.invokeMethod('setCornerRadius', arguments);
   }
 
-  // + (void)setBorderColor:(nonnull UIColor*)color;                     // default is nil
-  // + (void)setBorderWidth:(CGFloat)width;                              // default is 0
+  static void setBorderColor(Color color) {
+    Map<String, dynamic> arguments = {'color': color.value};
+    _channel.invokeMethod('setBorderColor', arguments);
+  }
+
+  static void setBorderWidth(num width) {
+    Map<String, dynamic> arguments = {'width': width};
+    _channel.invokeMethod('setBorderWidth', arguments);
+  }
+
   // + (void)setFont:(UIFont*)font;                                      // default is [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline]
-  // + (void)setForegroundColor:(UIColor*)color;                         // default is [UIColor blackColor], only used for SVProgressHUDStyleCustom
-  // + (void)setForegroundImageColor:(nullable UIColor*)color;           // default is the same as foregroundColor
-  // + (void)setBackgroundColor:(UIColor*)color;                         // default is [UIColor whiteColor], only used for SVProgressHUDStyleCustom
-  // + (void)setBackgroundLayerColor:(UIColor*)color;                    // default is [UIColor colorWithWhite:0 alpha:0.4], only used for SVProgressHUDMaskTypeCustom
-  // + (void)setImageViewSize:(CGSize)size;                              // default is 28x28 pt
+
+  static void setForegroundColor(Color color) {
+    Map<String, dynamic> arguments = {'color': color.value};
+    _channel.invokeMethod('setForegroundColor', arguments);
+  }
+
+  static void setForegroundImageColor(Color color) {
+    Map<String, dynamic> arguments = {'color': color.value};
+    _channel.invokeMethod('setForegroundImageColor', arguments);
+  }
+
+  static void setBackgroundColor(Color color) {
+    Map<String, dynamic> arguments = {'color': color.value};
+    _channel.invokeMethod('setBackgroundColor', arguments);
+  }
+
+  static void setBackgroundLayerColor(Color color) {
+    Map<String, dynamic> arguments = {'color': color.value};
+    _channel.invokeMethod('setBackgroundLayerColor', arguments);
+  }
+
+  static void setImageViewSize(Size size) {
+    Map<String, dynamic> arguments = {
+      'width': size.width,
+      'height': size.height,
+    };
+    _channel.invokeMethod('setImageViewSize', arguments);
+  }
+
   // + (void)setShouldTintImages:(BOOL)shouldTintImages;                 // default is YES
   // + (void)setInfoImage:(UIImage*)image;                               // default is the bundled info image provided by Freepik
   // + (void)setSuccessImage:(UIImage*)image;                            // default is bundled success image from Freepik
   // + (void)setErrorImage:(UIImage*)image;                              // default is bundled error image from Freepik
   // + (void)setViewForExtension:(UIView*)view;                          // default is nil, only used if #define SV_APP_EXTENSIONS is set
   // + (void)setGraceTimeInterval:(NSTimeInterval)interval;              // default is 0 seconds
-  // + (void)setMinimumDismissTimeInterval:(NSTimeInterval)interval;     // default is 5.0 seconds
-  // + (void)setMaximumDismissTimeInterval:(NSTimeInterval)interval;     // default is CGFLOAT_MAX
-  // + (void)setFadeInAnimationDuration:(NSTimeInterval)duration;        // default is 0.15 seconds
-  // + (void)setFadeOutAnimationDuration:(NSTimeInterval)duration;       // default is 0.15 seconds
+
+  static void setMinimumDismissTimeInterval(num interval) {
+    Map<String, dynamic> arguments = {'interval': interval};
+    _channel.invokeMethod('setMinimumDismissTimeInterval', arguments);
+  }
+
+  static void setMaximumDismissTimeInterval(num interval) {
+    Map<String, dynamic> arguments = {'interval': interval};
+    _channel.invokeMethod('setMaximumDismissTimeInterval', arguments);
+  }
+
+  static void setFadeInAnimationDuration(num duration) {
+    Map<String, dynamic> arguments = {'duration': duration};
+    _channel.invokeMethod('setFadeInAnimationDuration', arguments);
+  }
+
+  static void setFadeOutAnimationDuration(num duration) {
+    Map<String, dynamic> arguments = {'duration': duration};
+    _channel.invokeMethod('setFadeOutAnimationDuration', arguments);
+  }
+
   // + (void)setMaxSupportedWindowLevel:(UIWindowLevel)windowLevel;      // default is UIWindowLevelNormal
-  // default is NO
+
   static void setHapticsEnabled(bool hapticsEnabled) {
     Map<String, dynamic> arguments = {'hapticsEnabled': hapticsEnabled};
     _channel.invokeMethod('setHapticsEnabled', arguments);
