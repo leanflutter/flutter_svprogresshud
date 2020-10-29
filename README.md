@@ -9,6 +9,8 @@ A clean and lightweight progress HUD for flutter app.
 
 > The plugin supports almost all of [SVProgressHUD](https://github.com/SVProgressHUD/SVProgressHUD) APIs, for Android we have almost replicated SVProgressHUD effects ([View code](https://github.com/leanflutter/flutter_svprogresshud/tree/master/android/src/main/java/org/leanflutter/svprogresshud)).
 
+![SVProgressHUD](screenshots/SVProgressHUD.gif)
+
 ## Installation
 
 Add this to your package's pubspec.yaml file:
