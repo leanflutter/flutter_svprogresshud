@@ -62,6 +62,14 @@
         [self setBackgroundLayerColor:call result:result];
     } else if ([@"setImageViewSize" isEqualToString:call.method]) {
         [self setImageViewSize:call result:result];
+    } else if ([@"setMinimumDismissTimeInterval" isEqualToString:call.method]) {
+        [self setMinimumDismissTimeInterval:call result:result];
+    } else if ([@"setMaximumDismissTimeInterval" isEqualToString:call.method]) {
+        [self setMaximumDismissTimeInterval:call result:result];
+    } else if ([@"setFadeInAnimationDuration" isEqualToString:call.method]) {
+        [self setFadeInAnimationDuration:call result:result];
+    } else if ([@"setFadeOutAnimationDuration" isEqualToString:call.method]) {
+        [self setFadeOutAnimationDuration:call result:result];
     } else if ([@"setHapticsEnabled" isEqualToString:call.method]) {
         [self setHapticsEnabled:call result:result];
     } else  {
@@ -265,6 +273,34 @@
     
     CGSize imageViewSize = CGSizeMake([width floatValue], [height floatValue]);
     [SVProgressHUD setImageViewSize:imageViewSize];
+}
+
+- (void)setMinimumDismissTimeInterval:(FlutterMethodCall*)call
+                   result:(FlutterResult)result
+{
+    NSNumber *interval = call.arguments[@"interval"];
+    [SVProgressHUD setMinimumDismissTimeInterval:[interval floatValue]];
+}
+
+- (void)setMaximumDismissTimeInterval:(FlutterMethodCall*)call
+                   result:(FlutterResult)result
+{
+    NSNumber *interval = call.arguments[@"interval"];
+    [SVProgressHUD setMaximumDismissTimeInterval:[interval floatValue]];
+}
+
+- (void)setFadeInAnimationDuration:(FlutterMethodCall*)call
+                   result:(FlutterResult)result
+{
+    NSNumber *duration = call.arguments[@"duration"];
+    [SVProgressHUD setFadeInAnimationDuration:[duration floatValue]];
+}
+
+- (void)setFadeOutAnimationDuration:(FlutterMethodCall*)call
+                   result:(FlutterResult)result
+{
+    NSNumber *duration = call.arguments[@"duration"];
+    [SVProgressHUD setFadeOutAnimationDuration:[duration floatValue]];
 }
 
 - (void)setHapticsEnabled:(FlutterMethodCall*)call

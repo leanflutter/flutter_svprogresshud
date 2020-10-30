@@ -387,6 +387,7 @@ public class SVProgressHUD {
         if (contentView.getParent() == null) {
             decorView.addView(contentView);
             backgroundLayer.startAnimation(animBackgroundLayerFadeIn);
+            backgroundGradientLayer.startAnimation(animBackgroundLayerFadeIn);
             hudView.startAnimation(animHudViewFadeIn);
         }
     }
@@ -452,6 +453,7 @@ public class SVProgressHUD {
 
         dismissAction = () -> {
             backgroundLayer.startAnimation(animBackgroundLayerFadeOut);
+            backgroundGradientLayer.startAnimation(animBackgroundLayerFadeOut);
             hudView.startAnimation(animHudViewFadeOut);
             animHudViewFadeOut.setAnimationListener(new Animation.AnimationListener() {
                 @Override

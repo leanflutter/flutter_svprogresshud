@@ -109,10 +109,10 @@ void setImageViewSize(Size size);                               // default is 28
 // void setSuccessImage(UIImage image);                            // default is bundled success image from Freepik
 // void setErrorImage(UIImage image);                              // default is bundled error image from Freepik
 // void setGraceTimeInterval(num interval);                        // default is 0 seconds
-// void setMinimumDismissTimeInterval(num interval);               // default is 5.0 seconds
+void setMinimumDismissTimeInterval(num interval);               // default is 5.0 seconds
 // void setMaximumDismissTimeInterval(num interval);               // default is CGFLOAT_MAX
-// void setFadeInAnimationDuration(num duration);                  // default is 0.15 seconds
-// void setFadeOutAnimationDuration(num duration);                 // default is 0.15 seconds
+void setFadeInAnimationDuration(num duration);                  // default is 0.15 seconds
+void setFadeOutAnimationDuration(num duration);                 // default is 0.15 seconds
 void setHapticsEnabled(bool hapticsEnabled);                    // default is false
 ```
 
