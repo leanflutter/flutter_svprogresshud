@@ -303,7 +303,6 @@ public class SVProgressHUD {
 
     public void setBackgroundLayerColor(int color) {
         this.backgroundLayerColor = color;
-        this.backgroundLayer.setBackgroundColor(color);
     }
 
     public void setImageViewSize(float width, float height) {

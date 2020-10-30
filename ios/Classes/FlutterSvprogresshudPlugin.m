@@ -15,12 +15,6 @@
 {
     self = [super init];
     if (self) {
-        [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeNative];
-        [SVProgressHUD setDefaultStyle: SVProgressHUDStyleDark];
-        [SVProgressHUD setDefaultMaskType: SVProgressHUDMaskTypeClear];
-        [SVProgressHUD setForegroundColor:[UIColor greenColor]];
-        [SVProgressHUD setBackgroundColor:[UIColor redColor]];
-        [SVProgressHUD setBackgroundLayerColor:[UIColor blueColor]];
     }
     return self;
 }
@@ -58,6 +52,16 @@
         [self setBorderColor:call result:result];
     } else if ([@"setBorderWidth" isEqualToString:call.method]) {
         [self setBorderWidth:call result:result];
+    } else if ([@"setForegroundColor" isEqualToString:call.method]) {
+        [self setForegroundColor:call result:result];
+    } else if ([@"setForegroundImageColor" isEqualToString:call.method]) {
+        [self setForegroundImageColor:call result:result];
+    } else if ([@"setBackgroundColor" isEqualToString:call.method]) {
+        [self setBackgroundColor:call result:result];
+    } else if ([@"setBackgroundLayerColor" isEqualToString:call.method]) {
+        [self setBackgroundLayerColor:call result:result];
+    } else if ([@"setImageViewSize" isEqualToString:call.method]) {
+        [self setImageViewSize:call result:result];
     } else if ([@"setHapticsEnabled" isEqualToString:call.method]) {
         [self setHapticsEnabled:call result:result];
     } else  {
@@ -223,6 +227,44 @@
 {
     NSNumber *width = call.arguments[@"width"];
     [SVProgressHUD setBorderWidth:[width floatValue]];
+}
+
+- (void)setForegroundColor:(FlutterMethodCall*)call
+                    result:(FlutterResult)result
+{
+    NSNumber *color = call.arguments[@"color"];
+    [SVProgressHUD setForegroundColor:FLUTTERCOLOR(color.intValue)];
+}
+
+- (void)setForegroundImageColor:(FlutterMethodCall*)call
+                         result:(FlutterResult)result
+{
+    NSNumber *color = call.arguments[@"color"];
+    [SVProgressHUD setForegroundImageColor:FLUTTERCOLOR(color.intValue)];
+}
+
+- (void)setBackgroundColor:(FlutterMethodCall*)call
+                    result:(FlutterResult)result
+{
+    NSNumber *color = call.arguments[@"color"];
+    [SVProgressHUD setBackgroundColor:FLUTTERCOLOR(color.intValue)];
+}
+
+- (void)setBackgroundLayerColor:(FlutterMethodCall*)call
+                         result:(FlutterResult)result
+{
+    NSNumber *color = call.arguments[@"color"];
+    [SVProgressHUD setBackgroundLayerColor:FLUTTERCOLOR(color.intValue)];
+}
+
+- (void)setImageViewSize:(FlutterMethodCall*)call
+                  result:(FlutterResult)result
+{
+    NSNumber *width = call.arguments[@"width"];
+    NSNumber *height = call.arguments[@"height"];
+    
+    CGSize imageViewSize = CGSizeMake([width floatValue], [height floatValue]);
+    [SVProgressHUD setImageViewSize:imageViewSize];
 }
 
 - (void)setHapticsEnabled:(FlutterMethodCall*)call
