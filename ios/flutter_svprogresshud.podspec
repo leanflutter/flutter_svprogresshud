@@ -20,8 +20,8 @@ A new flutter plugin project.
 
   s.default_subspec = 'SVProgressHUD_Core'
   s.subspec 'SVProgressHUD_Core' do |core|
-    core.source_files = 'SVProgressHUD/SVProgressHUD/*.{h,m}'
-    core.resources = 'SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle'
+    core.source_files = 'SVProgressHUD/*.{h,m}'
+    core.resources = 'SVProgressHUD/SVProgressHUD.bundle'
   end
 
   # Flutter.framework does not contain a i386 slice.
