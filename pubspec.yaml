@@ -1,12 +1,12 @@
 name: flutter_svprogresshud
 description: A clean and lightweight progress HUD for flutter app.
-version: 0.0.4
-author: JianyingLi <lijy91@foxmail.com>
-homepage: https://github.com/blankapp/flutter_svprogresshud
+version: 0.0.5
+author: LiJianying <lijy91@foxmail.com>
+homepage: https://github.com/leanflutter/flutter_svprogresshud
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.10.0"
+  flutter: ">=1.20.0 <2.0.0"
 
 dependencies:
   flutter:
