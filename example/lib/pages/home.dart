@@ -137,6 +137,16 @@ class _HomePageState extends State<HomePage> {
     SVProgressHUD.setRingRadius(_ringRadius);
     SVProgressHUD.setRingNoTextRadius(_ringNoTextRadius);
     SVProgressHUD.setCornerRadius(_cornerRadius);
+    // SVProgressHUD.setBorderColor(Colors.red);
+    // SVProgressHUD.setBorderWidth(12);
+    // SVProgressHUD.setForegroundColor(Colors.red);
+    // SVProgressHUD.setForegroundImageColor(Colors.amber);
+    // SVProgressHUD.setBackgroundColor(Colors.lightGreen);
+    // SVProgressHUD.setBackgroundLayerColor(Colors.cyan.withOpacity(0.5));
+    // SVProgressHUD.setImageViewSize(Size(60, 60));
+    // SVProgressHUD.setMinimumDismissTimeInterval(2);
+    // SVProgressHUD.setFadeInAnimationDuration(1);
+    // SVProgressHUD.setFadeOutAnimationDuration(1);
     SVProgressHUD.setHapticsEnabled(_hapticsEnabled);
   }
 
