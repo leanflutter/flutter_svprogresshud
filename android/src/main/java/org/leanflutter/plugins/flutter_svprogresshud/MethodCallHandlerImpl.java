@@ -65,6 +65,12 @@ class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
             case "setCornerRadius":
                 this.setCornerRadius(call, result);
                 break;
+            case "setBorderColor":
+                this.setBorderColor(call, result);
+                break;
+            case "setBorderWidth":
+                this.setBorderWidth(call, result);
+                break;
             case "setForegroundColor":
                 this.setForegroundColor(call, result);
                 break;
@@ -185,6 +191,16 @@ class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
     private void setCornerRadius(MethodCall call, MethodChannel.Result result) {
         Number cornerRadius = (Number) call.argument("cornerRadius");
         svProgressHUD.setCornerRadius(cornerRadius.floatValue());
+    }
+
+    private void setBorderColor(MethodCall call, MethodChannel.Result result) {
+        Number color = (Number) call.argument("color");
+        svProgressHUD.setBorderColor(color.intValue());
+    }
+
+    private void setBorderWidth(MethodCall call, MethodChannel.Result result) {
+        Number width = (Number) call.argument("width");
+        svProgressHUD.setBorderWidth(width.floatValue());
     }
 
     private void setForegroundColor(MethodCall call, MethodChannel.Result result) {

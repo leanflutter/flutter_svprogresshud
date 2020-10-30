@@ -1,5 +1,7 @@
 #import "FlutterSvprogresshudPlugin.h"
 
+#define FLUTTERCOLOR(c) [UIColor colorWithRed:((c>>16)&0xFF)/255.0  green:((c>>8)&0xFF)/255.0 blue: ((c)&0xFF)/255.0 alpha:((c>>24)&0xFF)/255.0]
+
 @implementation FlutterSvprogresshudPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
@@ -52,6 +54,10 @@
         [self setRingNoTextRadius:call result:result];
     } else if ([@"setCornerRadius" isEqualToString:call.method]) {
         [self setCornerRadius:call result:result];
+    } else if ([@"setBorderColor" isEqualToString:call.method]) {
+        [self setBorderColor:call result:result];
+    } else if ([@"setBorderWidth" isEqualToString:call.method]) {
+        [self setBorderWidth:call result:result];
     } else if ([@"setHapticsEnabled" isEqualToString:call.method]) {
         [self setHapticsEnabled:call result:result];
     } else  {
@@ -203,6 +209,20 @@
 {
     NSNumber *cornerRadius = call.arguments[@"cornerRadius"];
     [SVProgressHUD setCornerRadius:[cornerRadius floatValue]];
+}
+
+- (void)setBorderColor:(FlutterMethodCall*)call
+                result:(FlutterResult)result
+{
+    NSNumber *color = call.arguments[@"color"];
+    [SVProgressHUD setBorderColor:FLUTTERCOLOR(color.intValue)];
+}
+
+- (void)setBorderWidth:(FlutterMethodCall*)call
+                result:(FlutterResult)result
+{
+    NSNumber *width = call.arguments[@"width"];
+    [SVProgressHUD setBorderWidth:[width floatValue]];
 }
 
 - (void)setHapticsEnabled:(FlutterMethodCall*)call

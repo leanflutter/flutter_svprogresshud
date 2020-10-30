@@ -56,6 +56,8 @@ public class SVProgressHUD {
     private float ringRadius;                                                                       // default is 18 pt
     private float ringNoTextRadius;                                                                 // default is 24 pt
     private float cornerRadius;                                                                     // default is 14 pt
+    private int borderColor;
+    private float borderWidth;
     //@property (strong, nonatomic, nonnull) UIFont *font UI_APPEARANCE_SELECTOR;                   // default is [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline]
     private int backgroundColor;
     private int foregroundColor;
@@ -274,11 +276,14 @@ public class SVProgressHUD {
         hudViewBackgroundDrawable.setCornerRadius(Utils.dp2px(activity, this.cornerRadius));
     }
 
-    void setBorderColor(int color) {
+    public void setBorderColor(int color) {
+        this.borderColor = color;
+        this.hudViewBackgroundDrawable.setStroke(Utils.dp2px(activity, borderWidth), borderColor);
     }
 
-    void setBorderWidth(float width) {
-
+    public void setBorderWidth(float width) {
+        this.borderWidth = width;
+        this.hudViewBackgroundDrawable.setStroke(Utils.dp2px(activity, borderWidth), borderColor);
     }
 
     //+ (void)setFont:(nonnull UIFont*)font;                                  // default is [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline]

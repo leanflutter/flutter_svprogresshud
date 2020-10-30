@@ -97,8 +97,8 @@ void setRingThickness(num width);                               // default is 2 
 void setRingRadiu(num radius);                                  // default is 18 pt
 void setRingNoTextRadius(num radius);                           // default is 24 pt
 void setCornerRadius(num cornerRadius);                         // default is 14 pt
-// void setBorderColor(Color color);                               // default is null
-// void setBorderWidth(num width);                                 // default is 0
+void setBorderColor(Color color);                               // default is null
+void setBorderWidth(num width);                                 // default is 0
 // void setForegroundColor(Color color);                           // default is Colors.black, only used for SVProgressHUDStyle.Custom
 // void setForegroundImageColor(Color color);                      // default is the same as foregroundColor
 // void setBackgroundColor(Color color);                           // default is Colors.white, only used for SVProgressHUDStyle.Custom
