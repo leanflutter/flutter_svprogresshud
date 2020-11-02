@@ -5,7 +5,7 @@
 [pub-image]: https://img.shields.io/pub/v/flutter_svprogresshud.svg
 [pub-url]: https://pub.dev/packages/flutter_svprogresshud
 
-A clean and lightweight progress HUD for flutter app.
+A clean and lightweight progress HUD for flutter app, based on SVProgressHUD.
 
 > The plugin supports almost all of [SVProgressHUD](https://github.com/SVProgressHUD/SVProgressHUD) APIs, for Android we have almost replicated SVProgressHUD effects ([View code](https://github.com/leanflutter/flutter_svprogresshud/tree/master/android/src/main/java/org/leanflutter/svprogresshud)).
 
@@ -17,7 +17,7 @@ Add this to your package's pubspec.yaml file:
 
 ```yaml
 dependencies:
-  flutter_svprogresshud: ^0.0.5
+  flutter_svprogresshud: ^0.0.6
 ```
 
 You can install packages from the command line:

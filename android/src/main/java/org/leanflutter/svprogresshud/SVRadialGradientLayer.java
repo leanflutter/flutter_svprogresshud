@@ -24,6 +24,7 @@ public class SVRadialGradientLayer extends ImageView {
         w = getWidth();
         h = getHeight();
 
+        if (w == 0 || h == 0) return;
 
         Shader shader;
 
