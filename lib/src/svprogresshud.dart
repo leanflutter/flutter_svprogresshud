@@ -11,7 +11,7 @@ class SVProgressHUD {
   static const MethodChannel _channel = const MethodChannel(kChannelName);
 
   static void show({
-    String status,
+    String? status,
   }) {
     Map<String, dynamic> arguments = {'status': status};
 
@@ -20,7 +20,7 @@ class SVProgressHUD {
 
   static void showProgress(
     num progress, {
-    String status,
+    String? status,
   }) {
     Map<String, dynamic> arguments = {
       'progress': progress,
@@ -30,32 +30,32 @@ class SVProgressHUD {
     _channel.invokeMethod('showProgress', arguments);
   }
 
-  static void dismiss({Duration delay, VoidCallback completion}) {
+  static void dismiss({Duration? delay, VoidCallback? completion}) {
     Map<String, dynamic> arguments = {};
     if (delay != null) {
-      arguments = {'delay': delay?.inMilliseconds};
+      arguments = {'delay': delay.inMilliseconds};
     }
     _channel.invokeMethod('dismiss', arguments).then((_) {
       if (completion != null) completion();
     });
   }
 
-  static void showInfo({String status}) {
+  static void showInfo({String? status}) {
     Map<String, dynamic> arguments = {'status': status};
     _channel.invokeMethod('showInfo', arguments);
   }
 
-  static void showSuccess({String status}) {
+  static void showSuccess({String? status}) {
     Map<String, dynamic> arguments = {'status': status};
     _channel.invokeMethod('showSuccess', arguments);
   }
 
-  static void showError({String status}) {
+  static void showError({String? status}) {
     Map<String, dynamic> arguments = {'status': status};
     _channel.invokeMethod('showError', arguments);
   }
 
-  static void showImage({String status}) {}
+  static void showImage({String? status}) {}
 
   static void setDefaultStyle(SVProgressHUDStyle style) {
     Map<String, dynamic> arguments = {'style': style.name};

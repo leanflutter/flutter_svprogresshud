@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'flutter_svprogresshud'
-  s.version          = '0.0.1'
+  s.version          = '0.0.7'
   s.summary          = 'A clean and lightweight progress HUD for flutter app.'
   s.description      = <<-DESC
 A new flutter plugin project.

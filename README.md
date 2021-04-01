@@ -17,7 +17,7 @@ Add this to your package's pubspec.yaml file:
 
 ```yaml
 dependencies:
-  flutter_svprogresshud: ^0.0.6
+  flutter_svprogresshud: ^0.0.7
 ```
 
 You can install packages from the command line:
@@ -125,7 +125,7 @@ void setHapticsEnabled(bool hapticsEnabled);                    // default is fa
 ```
 MIT License
 
-Copyright (c) 2020 LiJianying <lijy91@foxmail.com>
+Copyright (c) 2021 LiJianying <lijy91@foxmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
