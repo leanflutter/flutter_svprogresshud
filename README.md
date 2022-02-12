@@ -1,23 +1,48 @@
 # flutter_svprogresshud
 
-[![pub version][pub-image]][pub-url]
+[![pub version][pub-image]][pub-url] [![][discord-image]][discord-url]
 
 [pub-image]: https://img.shields.io/pub/v/flutter_svprogresshud.svg
 [pub-url]: https://pub.dev/packages/flutter_svprogresshud
 
+[discord-image]: https://img.shields.io/discord/884679008049037342.svg
+[discord-url]: https://discord.gg/zPa6EZ2jqb
+
+
 A clean and lightweight progress HUD for flutter app, based on SVProgressHUD.
+
 
 > The plugin supports almost all of [SVProgressHUD](https://github.com/SVProgressHUD/SVProgressHUD) APIs, for Android we have almost replicated SVProgressHUD effects ([View code](https://github.com/leanflutter/flutter_svprogresshud/tree/master/android/src/main/java/org/leanflutter/svprogresshud)).
 
+---
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [flutter_svprogresshud](#flutter_svprogresshud)
+  - [Quick Start](#quick-start)
+    - [Installation](#installation)
+    - [Usage](#usage)
+      - [Showing the HUD](#showing-the-hud)
+      - [Dismissing the HUD](#dismissing-the-hud)
+    - [Customization](#customization)
+  - [Related Links](#related-links)
+  - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ![SVProgressHUD](screenshots/SVProgressHUD.gif)
 
-## Installation
+
+## Quick Start
+
+### Installation
 
 Add this to your package's pubspec.yaml file:
 
 ```yaml
 dependencies:
-  flutter_svprogresshud: ^0.0.7
+  flutter_svprogresshud: ^1.0.0
 ```
 
 You can install packages from the command line:
@@ -26,7 +51,7 @@ You can install packages from the command line:
 $ flutter packages get
 ```
 
-## Usage
+### Usage
 
 (see demo in `/example`)
 
@@ -43,7 +68,7 @@ Future.delayed(Duration(seconds: 3)).then((value) {
 });
 ```
 
-### Showing the HUD
+#### Showing the HUD
 
 You can show the status of indeterminate tasks using one of the following:
 
@@ -59,7 +84,7 @@ SVProgressHUD.showProgress(0.91);
 SVProgressHUD.showProgress(0.91, status: 'Loading...');
 ```
 
-### Dismissing the HUD
+#### Dismissing the HUD
 
 The HUD can be dismissed using:
 
@@ -84,7 +109,7 @@ SVProgressHUD.showSuccess(status: 'Great Success!');
 SVProgressHUD.showError(status: 'Failed with Error');
 ```
 
-## Customization
+### Customization
 
 `SVProgressHUD` can be customized via the following methods:
 
@@ -122,26 +147,4 @@ void setHapticsEnabled(bool hapticsEnabled);                    // default is fa
 
 ## License
 
-```
-MIT License
-
-Copyright (c) 2021 LiJianying <lijy91@foxmail.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+[MIT](./LICENSE)
