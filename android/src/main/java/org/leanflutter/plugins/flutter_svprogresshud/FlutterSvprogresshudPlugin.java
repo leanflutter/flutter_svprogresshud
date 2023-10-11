@@ -3,6 +3,7 @@ package org.leanflutter.plugins.flutter_svprogresshud;
 import android.app.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
@@ -21,6 +22,7 @@ public class FlutterSvprogresshudPlugin implements FlutterPlugin, ActivityAware 
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
     /// when the Flutter Engine is detached from the Activity
+    @Nullable
     private MethodChannel channel;
 
     @Override
@@ -61,7 +63,9 @@ public class FlutterSvprogresshudPlugin implements FlutterPlugin, ActivityAware 
     }
 
     private void teardownChannel() {
-        channel.setMethodCallHandler(null);
-        channel = null;
+        if (channel != null) {
+            channel.setMethodCallHandler(null);
+            channel = null;
+        }
     }
 }
