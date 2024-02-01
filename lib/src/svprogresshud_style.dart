@@ -6,6 +6,6 @@ enum SVProgressHUDStyle {
 
 extension SVProgressHUDStyleGetName on SVProgressHUDStyle {
   String get name {
-    return this.toString().split('.').last;
+    return toString().split('.').last;
   }
 }

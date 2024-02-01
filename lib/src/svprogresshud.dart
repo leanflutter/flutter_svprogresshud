@@ -1,14 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import './svprogresshud_animationtype.dart';
-import './svprogresshud_masktype.dart';
-import './svprogresshud_style.dart';
+import 'package:flutter_svprogresshud/src/svprogresshud_animationtype.dart';
+import 'package:flutter_svprogresshud/src/svprogresshud_masktype.dart';
+import 'package:flutter_svprogresshud/src/svprogresshud_style.dart';
 
 const kChannelName = 'flutter_svprogresshud';
 
 class SVProgressHUD {
-  static const MethodChannel _channel = const MethodChannel(kChannelName);
+  static const MethodChannel _channel = MethodChannel(kChannelName);
 
   static void show({
     String? status,
@@ -40,17 +38,17 @@ class SVProgressHUD {
     });
   }
 
-  static void showInfo({String? status}) {
+  static void showInfo({required String status}) {
     Map<String, dynamic> arguments = {'status': status};
     _channel.invokeMethod('showInfo', arguments);
   }
 
-  static void showSuccess({String? status}) {
+  static void showSuccess({required String status}) {
     Map<String, dynamic> arguments = {'status': status};
     _channel.invokeMethod('showSuccess', arguments);
   }
 
-  static void showError({String? status}) {
+  static void showError({required String status}) {
     Map<String, dynamic> arguments = {'status': status};
     _channel.invokeMethod('showError', arguments);
   }

@@ -5,6 +5,6 @@ enum SVProgressHUDAnimationType {
 
 extension SVProgressHUDAnimationTypeGetName on SVProgressHUDAnimationType {
   String get name {
-    return this.toString().split('.').last;
+    return toString().split('.').last;
   }
 }

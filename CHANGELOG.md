@@ -1,3 +1,8 @@
+## 1.0.1
+
+- Bump dart sdk minimum version to 3.3.0
+- Fixing null pointer exception on the Android plugin #16
+
 ## 1.0.0
 
 - First stable release

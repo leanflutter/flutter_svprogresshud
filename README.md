@@ -19,15 +19,14 @@ A clean and lightweight progress HUD for flutter app, based on SVProgressHUD.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [flutter_svprogresshud](#flutter_svprogresshud)
-  - [Quick Start](#quick-start)
-    - [Installation](#installation)
-    - [Usage](#usage)
-      - [Showing the HUD](#showing-the-hud)
-      - [Dismissing the HUD](#dismissing-the-hud)
-    - [Customization](#customization)
-  - [Related Links](#related-links)
-  - [License](#license)
+- [Quick Start](#quick-start)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Showing the HUD](#showing-the-hud)
+    - [Dismissing the HUD](#dismissing-the-hud)
+  - [Customization](#customization)
+- [Related Links](#related-links)
+- [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -42,13 +41,13 @@ Add this to your package's pubspec.yaml file:
 
 ```yaml
 dependencies:
-  flutter_svprogresshud: ^1.0.0
+  flutter_svprogresshud: ^1.0.1
 ```
 
 You can install packages from the command line:
 
 ```bash
-$ flutter packages get
+$ flutter pub get
 ```
 
 ### Usage

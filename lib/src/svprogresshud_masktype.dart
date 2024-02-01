@@ -8,6 +8,6 @@ enum SVProgressHUDMaskType {
 
 extension SVProgressHUDMaskTypeGetName on SVProgressHUDMaskType {
   String get name {
-    return this.toString().split('.').last;
+    return toString().split('.').last;
   }
 }

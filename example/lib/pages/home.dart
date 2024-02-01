@@ -1,23 +1,23 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
 
 class _ListSection extends StatelessWidget {
-  final Widget? title;
-
   const _ListSection({
     Key? key,
     this.title,
   }) : super(key: key);
 
+  final Widget? title;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.grey.withOpacity(0.1),
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: 16,
         right: 16,
         top: 10,
@@ -28,7 +28,7 @@ class _ListSection extends StatelessWidget {
           Row(
             children: [
               DefaultTextStyle(
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -44,26 +44,25 @@ class _ListSection extends StatelessWidget {
 }
 
 class _ListItem extends StatelessWidget {
-  final Widget? title;
-  final Widget? subtitle;
-  final Widget? trailing;
-  final VoidCallback? onTap;
-
   const _ListItem({
     Key? key,
     this.title,
-    this.subtitle,
     this.trailing,
     this.onTap,
   }) : super(key: key);
+
+  final Widget? title;
+  final Widget? trailing;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
+      onTap: onTap,
       child: Container(
-        constraints: BoxConstraints(minHeight: 48),
-        padding: EdgeInsets.only(
+        constraints: const BoxConstraints(minHeight: 48),
+        padding: const EdgeInsets.only(
           left: 16,
           right: 16,
           top: 8,
@@ -75,7 +74,7 @@ class _ListItem extends StatelessWidget {
             Row(
               children: [
                 DefaultTextStyle(
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 15,
                   ),
@@ -85,18 +84,18 @@ class _ListItem extends StatelessWidget {
                 if (trailing != null) SizedBox(height: 34, child: trailing),
               ],
             ),
-            if (subtitle != null) Container(child: subtitle),
           ],
         ),
       ),
-      onTap: this.onTap,
     );
   }
 }
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -122,10 +121,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _stopAllTimer() {
-    if (_dismissAfter5sTimer != null && _dismissAfter5sTimer!.isActive)
+    if (_dismissAfter5sTimer != null && _dismissAfter5sTimer!.isActive) {
       _dismissAfter5sTimer!.cancel();
-    if (_progressTimer != null && _progressTimer!.isActive)
+    }
+    if (_progressTimer != null && _progressTimer!.isActive) {
       _progressTimer?.cancel();
+    }
   }
 
   void _updateHUDConfig() {
@@ -151,10 +152,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _dismissAfter5s() {
-    if (_dismissAfter5sTimer != null && _dismissAfter5sTimer!.isActive)
+    if (_dismissAfter5sTimer != null && _dismissAfter5sTimer!.isActive) {
       _dismissAfter5sTimer!.cancel();
+    }
 
-    _dismissAfter5sTimer = Timer(Duration(milliseconds: 5000), () {
+    _dismissAfter5sTimer = Timer(const Duration(milliseconds: 5000), () {
       SVProgressHUD.dismiss();
     });
   }
@@ -167,7 +169,7 @@ class _HomePageState extends State<HomePage> {
 
   void _showWithStatus() {
     _stopAllTimer();
-    SVProgressHUD.show(status: "Doing Stuff");
+    SVProgressHUD.show(status: 'Doing Stuff');
     _dismissAfter5s();
   }
 
@@ -197,31 +199,33 @@ class _HomePageState extends State<HomePage> {
       }
       SVProgressHUD.showProgress(
         progress / 100,
-        status: "Loading...",
+        status: 'Loading...',
       );
     });
   }
 
   void _showInfoWithStatus() {
     _stopAllTimer();
-    SVProgressHUD.showInfo(status: "Useful Information.");
+    SVProgressHUD.showInfo(status: 'Useful Information.');
   }
 
   void _showSuccessWithStatus() {
     _stopAllTimer();
-    SVProgressHUD.showSuccess(status: "Great Success!");
+    SVProgressHUD.showSuccess(status: 'Great Success!');
   }
 
   void _showErrorWithStatus() {
     _stopAllTimer();
-    SVProgressHUD.showError(status: "Failed with Error");
+    SVProgressHUD.showError(status: 'Failed with Error');
   }
 
   void _dismiss() {
     _stopAllTimer();
     SVProgressHUD.dismiss(
       completion: () {
-        print('HUD dismiss is completed!');
+        if (kDebugMode) {
+          print('HUD dismiss is completed!');
+        }
       },
     );
   }
@@ -229,9 +233,11 @@ class _HomePageState extends State<HomePage> {
   void _dismissWithDelay() {
     _stopAllTimer();
     SVProgressHUD.dismiss(
-      delay: Duration(milliseconds: 1000),
+      delay: const Duration(milliseconds: 1000),
       completion: () {
-        print('HUD dismissWithDelay is completed!');
+        if (kDebugMode) {
+          print('HUD dismissWithDelay is completed!');
+        }
       },
     );
   }
@@ -239,15 +245,12 @@ class _HomePageState extends State<HomePage> {
   Widget _buildSectionCustomization(BuildContext context) {
     return Column(
       children: <Widget>[
-        _ListSection(
+        const _ListSection(
           title: Text('Customization'),
         ),
         _ListItem(
-          title: Text('Style'),
+          title: const Text('Style'),
           trailing: ToggleButtons(
-            children: <Widget>[
-              for (var style in SVProgressHUDStyle.values) Text(style.name),
-            ],
             onPressed: (int index) {
               _style = SVProgressHUDStyle.values[index];
               _updateHUDConfig();
@@ -256,16 +259,15 @@ class _HomePageState extends State<HomePage> {
             },
             isSelected:
                 SVProgressHUDStyle.values.map((e) => e == _style).toList(),
+            children: <Widget>[
+              for (var style in SVProgressHUDStyle.values) Text(style.name),
+            ],
           ),
         ),
-        Divider(height: 0, indent: 16, endIndent: 16),
+        const Divider(height: 0, indent: 16, endIndent: 16),
         _ListItem(
-          title: Text('AnimationType'),
+          title: const Text('AnimationType'),
           trailing: ToggleButtons(
-            children: <Widget>[
-              for (var animationType in SVProgressHUDAnimationType.values)
-                Text(animationType.name),
-            ],
             onPressed: (int index) {
               _animationType = SVProgressHUDAnimationType.values[index];
               _updateHUDConfig();
@@ -275,16 +277,16 @@ class _HomePageState extends State<HomePage> {
             isSelected: SVProgressHUDAnimationType.values
                 .map((e) => e == _animationType)
                 .toList(),
+            children: <Widget>[
+              for (var animationType in SVProgressHUDAnimationType.values)
+                Text(animationType.name),
+            ],
           ),
         ),
-        Divider(height: 0, indent: 16, endIndent: 16),
+        const Divider(height: 0, indent: 16, endIndent: 16),
         _ListItem(
-          title: Text('MaskType'),
+          title: const Text('MaskType'),
           trailing: ToggleButtons(
-            children: <Widget>[
-              for (var maskType in SVProgressHUDMaskType.values)
-                Text(maskType.name),
-            ],
             onPressed: (int index) {
               _maskType = SVProgressHUDMaskType.values[index];
               _updateHUDConfig();
@@ -294,12 +296,16 @@ class _HomePageState extends State<HomePage> {
             isSelected: SVProgressHUDMaskType.values
                 .map((e) => e == _maskType)
                 .toList(),
+            children: <Widget>[
+              for (var maskType in SVProgressHUDMaskType.values)
+                Text(maskType.name),
+            ],
           ),
         ),
-        Divider(height: 0, indent: 16, endIndent: 16),
+        const Divider(height: 0, indent: 16, endIndent: 16),
         _ListItem(
-          title: Text('MinimumSize'),
-          trailing: Container(
+          title: const Text('MinimumSize'),
+          trailing: SizedBox(
             width: 120,
             child: Row(
               children: [
@@ -308,7 +314,7 @@ class _HomePageState extends State<HomePage> {
                     placeholder: '$_minimumSizeWidth',
                     keyboardType: TextInputType.number,
                     onChanged: (newValue) {
-                      if (newValue.length == 0) return;
+                      if (newValue.isEmpty) return;
                       _minimumSizeWidth = double.parse(newValue);
                       _updateHUDConfig();
 
@@ -322,7 +328,7 @@ class _HomePageState extends State<HomePage> {
                     placeholder: '$_minimumSizeHeight',
                     keyboardType: TextInputType.number,
                     onChanged: (newValue) {
-                      if (newValue.length == 0) return;
+                      if (newValue.isEmpty) return;
                       _minimumSizeHeight = double.parse(newValue);
                       _updateHUDConfig();
 
@@ -335,16 +341,16 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        Divider(height: 0, indent: 16, endIndent: 16),
+        const Divider(height: 0, indent: 16, endIndent: 16),
         _ListItem(
-          title: Text('RingThickness'),
-          trailing: Container(
+          title: const Text('RingThickness'),
+          trailing: SizedBox(
             width: 60,
             child: CupertinoTextField(
               placeholder: '$_ringThickness',
               keyboardType: TextInputType.number,
               onChanged: (newValue) {
-                if (newValue.length == 0) return;
+                if (newValue.isEmpty) return;
                 _ringThickness = num.parse(newValue);
                 _updateHUDConfig();
 
@@ -354,16 +360,16 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        Divider(height: 0, indent: 16, endIndent: 16),
+        const Divider(height: 0, indent: 16, endIndent: 16),
         _ListItem(
-          title: Text('RingRadius'),
-          trailing: Container(
+          title: const Text('RingRadius'),
+          trailing: SizedBox(
             width: 60,
             child: CupertinoTextField(
               placeholder: '$_ringRadius',
               keyboardType: TextInputType.number,
               onChanged: (newValue) {
-                if (newValue.length == 0) return;
+                if (newValue.isEmpty) return;
                 _ringRadius = num.parse(newValue);
                 _updateHUDConfig();
 
@@ -373,16 +379,16 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        Divider(height: 0, indent: 16, endIndent: 16),
+        const Divider(height: 0, indent: 16, endIndent: 16),
         _ListItem(
-          title: Text('RingNoTextRadius'),
-          trailing: Container(
+          title: const Text('RingNoTextRadius'),
+          trailing: SizedBox(
             width: 60,
             child: CupertinoTextField(
               placeholder: '$_ringNoTextRadius',
               keyboardType: TextInputType.number,
               onChanged: (newValue) {
-                if (newValue.length == 0) return;
+                if (newValue.isEmpty) return;
                 _ringNoTextRadius = num.parse(newValue);
                 _updateHUDConfig();
 
@@ -392,16 +398,16 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        Divider(height: 0, indent: 16, endIndent: 16),
+        const Divider(height: 0, indent: 16, endIndent: 16),
         _ListItem(
-          title: Text('CornerRadius'),
-          trailing: Container(
+          title: const Text('CornerRadius'),
+          trailing: SizedBox(
             width: 60,
             child: CupertinoTextField(
               placeholder: '$_cornerRadius',
               keyboardType: TextInputType.number,
               onChanged: (newValue) {
-                if (newValue.length == 0) return;
+                if (newValue.isEmpty) return;
                 _cornerRadius = num.parse(newValue);
                 _updateHUDConfig();
 
@@ -411,9 +417,9 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        Divider(height: 0, indent: 16, endIndent: 16),
+        const Divider(height: 0, indent: 16, endIndent: 16),
         _ListItem(
-          title: Text('HapticsEnabled'),
+          title: const Text('HapticsEnabled'),
           trailing: Checkbox(
             value: _hapticsEnabled,
             onChanged: (newValue) {
@@ -431,53 +437,53 @@ class _HomePageState extends State<HomePage> {
   Widget _buildSectionExamples(BuildContext context) {
     return Column(
       children: <Widget>[
-        _ListSection(
+        const _ListSection(
           title: Text('Examples'),
         ),
         _ListItem(
-          title: Text('show'),
-          onTap: this._show,
+          title: const Text('show'),
+          onTap: _show,
         ),
-        Divider(height: 0, indent: 16, endIndent: 16),
+        const Divider(height: 0, indent: 16, endIndent: 16),
         _ListItem(
-          title: Text('showWithStatus'),
-          onTap: this._showWithStatus,
+          title: const Text('showWithStatus'),
+          onTap: _showWithStatus,
         ),
-        Divider(height: 0, indent: 16, endIndent: 16),
+        const Divider(height: 0, indent: 16, endIndent: 16),
         _ListItem(
-          title: Text('showProgress'),
-          onTap: this._showProgress,
+          title: const Text('showProgress'),
+          onTap: _showProgress,
         ),
-        Divider(height: 0, indent: 16, endIndent: 16),
+        const Divider(height: 0, indent: 16, endIndent: 16),
         _ListItem(
-          title: Text('showProgressWithStatus'),
-          onTap: this._showProgressWithStatus,
+          title: const Text('showProgressWithStatus'),
+          onTap: _showProgressWithStatus,
         ),
-        Divider(height: 0, indent: 16, endIndent: 16),
+        const Divider(height: 0, indent: 16, endIndent: 16),
         _ListItem(
-          title: Text('showInfoWithStatus'),
-          onTap: this._showInfoWithStatus,
+          title: const Text('showInfoWithStatus'),
+          onTap: _showInfoWithStatus,
         ),
-        Divider(height: 0, indent: 16, endIndent: 16),
+        const Divider(height: 0, indent: 16, endIndent: 16),
         _ListItem(
-          title: Text('showSuccessWithStatus'),
-          onTap: this._showSuccessWithStatus,
+          title: const Text('showSuccessWithStatus'),
+          onTap: _showSuccessWithStatus,
         ),
-        Divider(height: 0, indent: 16, endIndent: 16),
+        const Divider(height: 0, indent: 16, endIndent: 16),
         _ListItem(
-          title: Text('showErrorWithStatus'),
-          onTap: this._showErrorWithStatus,
+          title: const Text('showErrorWithStatus'),
+          onTap: _showErrorWithStatus,
         ),
-        Divider(height: 0, indent: 16, endIndent: 16),
+        const Divider(height: 0, indent: 16, endIndent: 16),
         _ListItem(
-          title: Text('dismiss'),
-          onTap: this._dismiss,
+          title: const Text('dismiss'),
+          onTap: _dismiss,
         ),
-        Divider(height: 0, indent: 16, endIndent: 16),
+        const Divider(height: 0, indent: 16, endIndent: 16),
         _ListItem(
-          title: Text('dismissWithDelay (1s)'),
-          onTap: this._dismissWithDelay,
-        )
+          title: const Text('dismissWithDelay (1s)'),
+          onTap: _dismissWithDelay,
+        ),
       ],
     );
   }
