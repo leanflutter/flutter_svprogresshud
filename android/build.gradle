@@ -22,7 +22,8 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    namespace "org.leanflutter.plugins.flutter_svprogresshud"
+    compileSdkVersion 34
 
     defaultConfig {
         minSdkVersion 16
