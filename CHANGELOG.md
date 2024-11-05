@@ -1,3 +1,7 @@
+## 1.1.0
+
+- Fix: Added missing namespace in build.gradle for compatibility with Android Gradle Plugin (AGP) 7.0+ #19
+
 ## 1.0.1
 
 - Bump dart sdk minimum version to 3.3.0
