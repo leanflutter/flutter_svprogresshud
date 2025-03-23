@@ -1,3 +1,5 @@
+> **🚀 Ship Your App Faster**: Try [Fastforge](https://fastforge.dev) - The simplest way to build, package and distribute your Flutter apps.
+
 # flutter_svprogresshud
 
 [![pub version][pub-image]][pub-url] [![][discord-image]][discord-url]
